@@ -1,0 +1,62 @@
+
+/**
+    This is an auto-generated SOUL patch template.
+    This example code simply plays a trivial sinewave mono-synth -
+    it's up to you to build upon this and create a real synthesiser!
+*/
+graph clarinot  [[main]]
+{
+    input delay_length.eventIn delayLength [[min: 1.0/7000.0, max: 1.0/20.0]];
+    input pressure.eventIn pressureIn;
+    input noisiness.eventIn noiseGain;
+    input breath_coeff.eventIn breathCoeff [[min: -1.0, max: 1.0, init: -1.0]];
+    input stiffness.eventIn reedStiffness [[min: -1.0, max: 1.0, init: -0.8]];
+    input opening.eventIn reedOpening [[min: -1.0, max: 1.0, init: 0.6]];
+    input pole.eventIn filterPole [[min: -1.0, max: 1.0, init: 0.9]];
+    input reflection_coeff.eventIn reflectionCoeff [[min: -1.0, max: 1.0, init: -0.95]];
+
+    output stream float audioOut;
+
+    let
+    {
+        breath = NoisyBreath;
+        pressure = EvExpSmooth;
+        noisiness = EvExpSmooth;
+        breath_coeff = EvExpSmooth;
+        pressureDiff = soul::mixers::DynamicSum(float);
+        reed = soul::mixers::DynamicSum(float);
+        one = Constant(float, 1.0);
+        stiffness = EvExpSmooth;
+        opening = EvExpSmooth;
+        clipping = Clamp(-1.0, 1.0);
+        pressureMix = soul::mixers::DynamicSum(float);
+        bore = DelayL(100000);
+        delay_length = EvExpSmooth;
+        losses = DynamicOnePole;
+        pole = EvExpSmooth;
+        reflection_coeff = EvExpSmooth;
+    }
+
+    connection
+    {
+        pressure -> breath.pressureIn;
+        noisiness -> breath.noise_gain_coeff;
+        breath -> pressureDiff.in1, pressureMix.in1;
+        breath_coeff -> pressureDiff.gain1;
+        one -> pressureMix.gain1;
+        pressureDiff -> reed.in1;
+        opening -> reed.in2;
+        stiffness -> reed.gain1;
+        one -> reed.gain2;
+        reed -> pressureMix.in2;
+        pressureDiff -> pressureMix.gain2;
+        pressureMix -> bore.audioIn;
+        delay_length -> bore.delay;
+        bore -> losses.audioIn;
+        pole -> losses.pole;
+        losses -> [1] -> pressureDiff.in2;
+        reflection_coeff -> pressureDiff.gain2;
+
+        losses -> audioOut;
+    }
+}

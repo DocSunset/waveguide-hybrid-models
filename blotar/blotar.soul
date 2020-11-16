@@ -1,4 +1,4 @@
-graph simple_electric  [[main]]
+graph blotar  [[main]]
 {
     input event soul::midi::Message midiIn;
     input pre_distortion_output_gain.gainIn dry [[min: 0, max: 1, init: 0.5]];

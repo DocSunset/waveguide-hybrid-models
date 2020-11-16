@@ -1,0 +1,18 @@
+
+{
+    "soulPatchV1":
+    {
+        "ID":               "com.yourcompany.karp_strong",
+        "version":          "0.1",
+        "name":             "karp_strong",
+        "description":      "This is a SOUL Patch called karp_strong!",
+        "category":         "synth",
+        "manufacturer":     "Your Company Name",
+        "isInstrument":     true,
+
+        "source":           [ "karp_strong.soul", 
+                              "../common/DelayA.soul", 
+                              "../common/NoiseBurst.soul", 
+                              "../common/OneZero.soul" ]
+    }
+}

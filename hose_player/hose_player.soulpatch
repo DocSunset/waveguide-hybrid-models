@@ -1,0 +1,22 @@
+
+{
+    "soulPatchV1":
+    {
+        "ID":               "com.yourcompany.hose_player",
+        "version":          "0.1",
+        "name":             "hose_player",
+        "description":      "This is a SOUL Patch called hose_player!",
+        "category":         "synth",
+        "manufacturer":     "Your Company Name",
+        "isInstrument":     true,
+
+        "source":           [ "hose_player.soul",
+                              "../common/DCBlocker.soul",
+                              "../common/EvExpSmooth.soul",
+                              "../common/Constant.soul",
+                              "../common/Trim.soul",
+                              "../common/Clamp.soul",
+                              "../common/DelayL.soul",
+                              "../common/Biquad.soul" ]
+    }
+}

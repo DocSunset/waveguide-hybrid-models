@@ -1,0 +1,13 @@
+processor Trim(float trim)
+{
+    input stream float audioIn;
+    output stream float audioOut;
+    void run()
+    {
+        loop
+        {
+            audioOut << audioIn * trim;
+            advance();
+        }
+    }
+}

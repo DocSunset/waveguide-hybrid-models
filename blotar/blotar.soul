@@ -1,0 +1,137 @@
+graph simple_electric  [[main]]
+{
+    input event soul::midi::Message midiIn;
+    input pre_distortion_output_gain.gainIn dry [[min: 0, max: 1, init: 0.5]];
+    input post_distortion_output_gain.gainIn wet [[min: 0, max: 1]];
+    input event float breath_noise [[min: 0, max: 1]];
+    input event float breath_pressure [[min: 0, max: 1]];
+    input pre_distortion_gain.gainIn distortion_gain [[min: 0, max: 5, init: 1]];
+    input feedback_gain.gainIn feedback [[min: 0, max: 1]];
+    input event float loss [[min: 0, max: 1, init: 0.998]];
+    input mapping.jet_delay_ratio [[min: 0, max: 2]];
+    input event float crossfade [[min: 0, max: 1, init: 1.0f]];
+    output stream float audioOut;
+
+    let
+    {
+        midiParser = soul::midi::MPEParser;
+        mapping = Mapping;
+        pluck = NoiseBurst;
+        breath = NoisyBreath;
+        dcblock = DCBlocker;
+        string_delay = DelayA(100000);
+        filter = BlotarFilter;
+        string_loss = VCA;
+        distortion = Cubic(-1.0f, 0.0f, 1.0f, 0.0f);
+        clipping = Clamp(-2.0f/3.0f, 2.0f/3.0f);
+        feedback_delay = DelayL(100000);
+        pre_distortion_gain = EvVCA;
+        feedback_gain = EvVCA;
+        pre_distortion_output_gain = EvVCA;
+        post_distortion_output_gain = EvVCA;
+        delay_adjustment = Constant(int, 1);
+        lsmooth = EvExpSmooth;
+        fsmooth = EvExpSmooth;
+        bsmooth = EvExpSmooth;
+        nsmooth = EvExpSmooth;
+    }
+
+    connection
+    {
+        midiIn -> midiParser -> mapping.eventIn; 
+        mapping.burst -> pluck.burst;
+        mapping.string_len -> string_delay.delay;
+        mapping.jet_len -> feedback_delay.delay;
+        loss -> lsmooth -> string_loss.gainIn;
+        crossfade -> fsmooth -> filter.crossfade;
+
+        pluck, feedback_delay, string_loss -> string_delay.audioIn;
+        string_delay -> dcblock;
+        dcblock -> filter.audioIn;
+        filter -> [1] -> string_loss.audioIn;
+
+        breath_pressure -> bsmooth -> breath.pressureIn;
+        breath_noise -> nsmooth -> breath.noise_gain_coeff;
+        string_delay, breath -> pre_distortion_gain.audioIn;
+        pre_distortion_gain.audioOut -> distortion -> clipping;
+        clipping -> feedback_gain.audioIn;
+        feedback_gain -> [1] -> feedback_delay.audioIn;
+        
+        dcblock -> pre_distortion_output_gain.audioIn;
+        clipping -> post_distortion_output_gain.audioIn; 
+        pre_distortion_output_gain, post_distortion_output_gain -> audioOut;
+
+        delay_adjustment -> string_delay.adjustment;
+        delay_adjustment -> feedback_delay.adjustment;
+    }
+}
+
+//==============================================================================
+processor Mapping
+{
+    input event (soul::note_events::NoteOn,
+                 soul::note_events::NoteOff,
+                 soul::note_events::Control) eventIn;
+    
+    input event float jet_delay_ratio;
+
+    output event float burst;
+    output stream float string_len;
+    output stream float jet_len;
+    output stream float string_loss;
+
+    float s, jet, ratio;
+    int num_active;
+
+    event jet_delay_ratio (float r)
+    {
+        ratio = r;
+        jet = ratio * s;
+    }
+
+    event eventIn (soul::note_events::NoteOn e)
+    {
+        let freq = soul::noteNumberToFrequency(e.note);
+        s = 1.0f/freq;
+        jet = ratio * s;
+        num_active++;
+        burst << s;
+    }
+    
+    event eventIn (soul::note_events::NoteOff e)
+    {
+        num_active--;
+    }
+
+    void run() { 
+        loop{ 
+            let l = num_active > 0 ? 0.99999f : 0.1f;
+            string_len << s; 
+            jet_len << jet; 
+            string_loss << l;
+            advance(); 
+        } 
+    }
+}
+
+graph BlotarFilter
+{
+    input stream float audioIn;
+    output stream float audioOut;
+    input fade.fade crossfade;
+
+    let
+    {
+        pole = OnePole(0.7f);
+        zero = OneZero(-1.0f);
+        fade = LinearCrossfade(float);
+    }
+
+    connection
+    {
+        audioIn -> pole, zero;
+        pole -> fade.left;
+        zero -> fade.right;
+        fade -> audioOut;
+    }
+}

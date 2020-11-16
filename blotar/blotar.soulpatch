@@ -1,0 +1,29 @@
+
+{
+    "soulPatchV1":
+    {
+        "ID":               "com.yourcompany.blotar",
+        "version":          "0.1",
+        "name":             "blotar",
+        "description":      "This is a SOUL Patch called blotar!",
+        "category":         "synth",
+        "manufacturer":     "Your Company Name",
+        "isInstrument":     true,
+
+        "source":           [ "blotar.soul", 
+                              "../common/Constant.soul", 
+                              "../common/DCBlocker.soul", 
+                              "../common/EvExpSmooth.soul", 
+                              "../common/LinearCrossfade.soul", 
+                              "../common/Trim.soul", 
+                              "../common/Cubic.soul", 
+                              "../common/Clamp.soul", 
+                              "../common/VCA.soul", 
+                              "../common/DelayL.soul", 
+                              "../common/DelayA.soul", 
+                              "../common/NoiseBurst.soul", 
+                              "../common/NoisyBreath.soul", 
+                              "../common/OnePole.soul",
+                              "../common/OneZero.soul" ]
+    }
+}

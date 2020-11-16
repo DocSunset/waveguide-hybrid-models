@@ -1,0 +1,31 @@
+processor NoiseBurst
+{
+    input event float burst;
+    output stream float audioOut;
+
+    float duration;
+
+    event burst (float burst_duration)
+    {
+        duration = burst_duration;
+    }
+
+    void run()
+    {
+        let T_s = float(1.0 / processor.frequency);
+        var rng = soul::random::RandomNumberState (processor.id + processor.session);
+        var amplitude = 0.0f;
+        loop
+        {
+            // A very simple amplitude envelope - linear attack, exponential decay
+            if (duration <= 0)
+                amplitude *= 0.999f;
+            else
+                amplitude = min (amplitude + 0.001f, 1.0f);
+            audioOut << soul::random::getNextBipolar(rng) * amplitude;
+            advance();
+            duration = max(duration - T_s, 0.0f);
+        }
+    }
+}
+

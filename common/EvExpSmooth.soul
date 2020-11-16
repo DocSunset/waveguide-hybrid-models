@@ -1,0 +1,22 @@
+processor EvExpSmooth
+{
+    input event float eventIn;
+    output stream float streamOut;
+    
+    float value, target;
+
+    event eventIn(float v)
+    {
+        target = v;
+    }
+
+    void run()
+    {
+        loop
+        {
+            value = 0.9f * value + 0.1f * target;
+            streamOut << value;
+            advance();
+        }
+    }
+}

@@ -1,0 +1,16 @@
+processor LinearCrossfade(using T)
+{
+    input stream T left;
+    input stream T right;
+    input stream float fade;
+    output stream T out;
+
+    void run()
+    {
+        loop
+        {
+            out << left * (1.0f - fade) + right * fade;
+            advance();
+        }
+    }
+}

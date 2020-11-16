@@ -1,0 +1,48 @@
+graph karp_strong  [[main]]
+{
+    input event soul::midi::Message midiIn;
+    output stream float audioOut;
+
+    let
+    {
+        midiParser = soul::midi::MPEParser;
+        mapping = Mapping;
+        pluck = NoiseBurst;
+        delay = DelayA(100000);
+        filter = OneZero(-1.0);
+    }
+
+    connection
+    {
+        midiIn -> midiParser -> mapping; 
+        mapping.burst -> pluck.burst;
+        mapping.string_len -> delay.delay;
+
+        pluck -> delay.audioIn;
+        delay -> filter.audioIn;
+        filter -> audioOut;
+        filter -> [1] -> delay.audioIn;
+    }
+}
+
+//==============================================================================
+processor Mapping
+{
+    input event (soul::note_events::NoteOn,
+                 soul::note_events::NoteOff,
+                 soul::note_events::Control) eventIn;
+
+    output event float burst;
+    output stream float string_len;
+
+    float duration;
+
+    event eventIn (soul::note_events::NoteOn e)
+    {
+        let freq = soul::noteNumberToFrequency(e.note);
+        duration = 1.0f/freq;
+        burst << duration;
+    }
+
+    void run() { loop{ string_len << duration; advance(); } }
+}

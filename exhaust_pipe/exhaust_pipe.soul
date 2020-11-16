@@ -1,0 +1,129 @@
+graph exhaust_pipe  [[main]]
+{
+    input event soul::midi::Message midiIn;
+    output stream float audioOut;
+
+    let
+    {
+        midiParser = soul::midi::MPEParser;
+        flute = ExhaustPipe;
+        mapping = ExhaustPipeMapping;
+    }
+
+    connection
+    {
+        midiIn -> midiParser -> mapping;
+        mapping.breath_pressure      -> flute.breath_pressure;
+        mapping.bore_length          -> flute.bore_length;
+        mapping.jet_length           -> flute.jet_length;
+        mapping.output_gain          -> flute.output_gain;
+        mapping.jet_reflection_coeff -> flute.jet_reflection_coeff;
+        mapping.end_reflection_coeff -> flute.end_reflection_coeff;
+        flute.audioOut -> audioOut;
+    }
+}
+
+//==============================================================================
+
+processor ExhaustPipeMapping
+{
+    input event (soul::note_events::NoteOn,
+                 soul::note_events::NoteOff,
+                 soul::note_events::Control) eventIn;
+
+    output stream float breath_pressure;
+    output stream float bore_length;
+    output stream float jet_length;
+    output stream float output_gain;
+    output stream float jet_reflection_coeff;
+    output stream float end_reflection_coeff;
+
+    float 
+        breath_pressure_value, breath_pressure_target, 
+        bore_length_value,     bore_length_target, 
+        jet_length_value,      jet_length_target, 
+        output_gain_value,     output_gain_target,
+        jet_reflection_value,  jet_reflection_target,
+        end_reflection_value,  end_reflection_target,
+        jet_length_ratio;
+
+    int active_notes;
+
+    event eventIn(soul::note_events::NoteOn e)
+    {
+        let frequency = soul::noteNumberToFrequency(e.note);
+        bore_length_target = 1.0f/frequency;
+        jet_length_target = bore_length_target * jet_length_ratio;
+        active_notes += 1;
+    }
+
+    event eventIn(soul::note_events::NoteOff e)
+    {
+        active_notes -= 1;
+    }
+
+    event eventIn(soul::note_events::Control e)
+    {
+        if (e.control == 2) breath_pressure_target = e.value;
+        if (e.control == 70) jet_reflection_target = (2.0f * e.value) - 1.0f;
+        if (e.control == 71) end_reflection_target = (2.0f * e.value) - 1.0f;
+        if (e.control == 72) 
+        {
+            jet_length_ratio = e.value * 2;
+            jet_length_target = bore_length_target * jet_length_ratio;
+        }
+        if (e.control == 73)
+        {
+            output_gain_target = e.value;
+        }
+    }
+
+    void run()
+    {
+        loop
+        {
+            bore_length          << bore_length_target;
+            jet_length           << jet_length_target;
+            breath_pressure      << float(0 < active_notes) * breath_pressure_target * 3/2.0f;
+            output_gain          << output_gain_target;
+            jet_reflection_coeff << jet_reflection_target;
+            end_reflection_coeff << end_reflection_target;
+            advance();
+        }
+    }
+}
+
+graph ExhaustPipe
+{
+    input vortex_jet.breath_pressure;
+    input vortex_jet.delay jet_length;
+    input vortex_jet.jet_reflection_coeff;
+    input vortex_jet.end_reflection_coeff;
+    input bore_delay.delay bore_length;
+    input stream float output_gain;
+
+    output stream float audioOut;
+    
+    let
+    {
+        vortex_jet = Vortex::Jet(200000);
+        bore_delay = DelayL(100000);
+        losses = OnePole(0.7f - float(0.1f * 22050.0f / processor.frequency)); // from STK Flute
+        out = VCA;
+
+        delay_adjustment = Constant(int, 1);
+    }
+
+    connection
+    {
+        // jet
+        vortex_jet.excitation -> bore_delay.audioIn;
+        bore_delay -> losses;
+        losses -> [1] -> vortex_jet.reflection;
+        losses -> out.audioIn;
+        output_gain -> out.gainIn;
+        out -> audioOut;
+
+        delay_adjustment -> vortex_jet.adjustment, bore_delay.adjustment;
+    }
+}

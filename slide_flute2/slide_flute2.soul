@@ -1,0 +1,168 @@
+graph slide_flute  [[main]]
+{
+    input event soul::midi::Message midiIn;
+    input event float a [[min: 0, max: 4]];
+    input event float pole [[min: 0, max: 1]];
+    output stream float audioOut;
+
+    let
+    {
+        midiParser = soul::midi::MPEParser;
+        flute = SlideFlute;
+        mapping = SlideFluteMapping;
+        asmooth = EvExpSmooth;
+        polesmooth = EvExpSmooth;
+    }
+
+    connection
+    {
+        midiIn -> midiParser -> mapping.eventIn;
+        a -> asmooth -> flute.a, mapping.a;
+        mapping.bore_length          -> flute.bore_length;
+        mapping.jet_length           -> flute.jet_length;
+        mapping.breath_pressure      -> flute.breath_pressure;
+        mapping.noise_gain_coeff     -> flute.noise_gain_coeff;
+        mapping.end_reflection_coeff -> flute.end_reflection_coeff;
+        mapping.jet_reflection_coeff -> flute.jet_reflection_coeff;
+        mapping.output_gain          -> flute.output_gain;
+        pole -> polesmooth -> flute.pole;
+        flute.audioOut -> audioOut;
+    }
+}
+
+//==============================================================================
+
+processor SlideFluteMapping
+{
+    input event (soul::note_events::NoteOn,
+                 soul::note_events::NoteOff,
+                 soul::note_events::Control) eventIn;
+
+    input stream float a;
+    output stream float bore_length;
+    output stream float jet_length;
+    output stream float breath_pressure;
+    output stream float noise_gain_coeff;
+    output stream float jet_reflection_coeff;
+    output stream float end_reflection_coeff;
+    output stream float output_gain;
+
+    float 
+        bore_length_value,     bore_length_target, 
+        jet_length_value,      jet_length_target, 
+        breath_pressure_value, breath_pressure_target, 
+        noise_gain_value,      noise_gain_target,
+        end_reflection_value,  end_reflection_target,
+        jet_reflection_value,  jet_reflection_target,
+        output_gain_value,     output_gain_target,
+        jet_length_ratio;
+    int active_notes;
+
+    event eventIn(soul::note_events::NoteOn e)
+    {
+        let frequency = soul::noteNumberToFrequency(e.note);
+        bore_length_target = 1.0f/frequency;
+        jet_length_target = bore_length_target * jet_length_ratio;
+        active_notes += 1;
+    }
+
+    event eventIn(soul::note_events::NoteOff e)
+    {
+        active_notes -= 1;
+    }
+
+    event eventIn(soul::note_events::Control e)
+    {
+        if (e.control == 1) noise_gain_target = e.value;
+        if (e.control == 2) breath_pressure_target = e.value;
+        if (e.control == 70) jet_reflection_target = (2.0f * e.value) - 1.0f;
+        if (e.control == 71) end_reflection_target = (2.0f * e.value) - 1.0f;
+        if (e.control == 72) 
+        {
+            jet_length_ratio = e.value * 2;
+            jet_length_target = bore_length_target * jet_length_ratio;
+        }
+        if (e.control == 73)
+        {
+            output_gain_target = e.value;
+        }
+    }
+
+    void run()
+    {
+        loop
+        {
+            bore_length          << bore_length_target;
+            jet_length           << jet_length_target;
+            breath_pressure      << float(0 < active_notes) * breath_pressure_target * 3/2.0f;
+            noise_gain_coeff     << noise_gain_target;
+            let reflco = 0.50f - 0.25f * (a/4.0f) * (a/4.0f);
+            console << reflco << "\n";
+            jet_reflection_coeff << reflco;
+            end_reflection_coeff << reflco;
+            output_gain          << output_gain_target;
+            advance();
+        }
+    }
+}
+
+graph SlideFlute
+{
+    input jet_delay.delay jet_length;
+    input bore_delay.delay bore_length;
+    input breath.pressureIn breath_pressure;
+    input breath.noise_gain_coeff noise_gain_coeff;
+    input jet_table.a;
+    input losses.pole;
+    input stream float jet_reflection_coeff;
+    input stream float end_reflection_coeff;
+    input stream float output_gain;
+
+    output stream float audioOut;
+    
+    let
+    {
+        breath = NoisyBreath;
+        jet_reflection = VCA;
+        jet_delay = DelayL(200000);
+        jet_table = CubicMap;
+        clamping = Clamp(-1.0f, 1.0f);
+        dcblock = DCBlocker;
+        bore_delay = DelayL(100000);
+        // why does this work so much better than e.g. OnePole(0.9)???
+        //losses = OnePole(0.7f - float(0.1f * 22050.0f / processor.frequency)); // from STK Flute
+        //losses = OnePole(0.9f); // from uBlotar paper
+        losses = DynamicOnePole;
+        end_reflection = VCA;
+        out = VCA;
+
+        delay_adjustment = Constant(int, 1);
+    }
+
+    connection
+    {
+        // breath
+
+        // jet
+        breath.pressureOut, jet_reflection.audioOut -> jet_delay.audioIn;
+        jet_delay -> jet_table.audioIn;
+        jet_table -> clamping -> dcblock;
+        dcblock, end_reflection -> losses.audioIn;
+
+        // bore
+        losses -> bore_delay.audioIn;
+        bore_delay.audioOut -> [1] -> jet_reflection.audioIn;
+        bore_delay.audioOut -> [1] -> end_reflection.audioIn;
+
+        // output
+        losses -> out.audioIn;
+        out -> audioOut;
+
+        // gain controls
+        output_gain -> out.gainIn;
+        jet_reflection_coeff -> jet_reflection.gainIn;
+        end_reflection_coeff -> end_reflection.gainIn;
+
+        delay_adjustment -> jet_delay.adjustment, bore_delay.adjustment;
+    }
+}

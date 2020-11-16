@@ -1,0 +1,14 @@
+processor Clamp (float min, float max)
+{
+    input stream float audioIn;
+    output stream float audioOut;
+
+    void run()
+    {
+        loop
+        {
+            audioOut << clamp(audioIn, min, max);
+            advance();
+        }
+    }
+}

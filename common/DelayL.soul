@@ -1,0 +1,29 @@
+processor DelayL(int maxDelaySamples)
+{
+    input stream float audioIn;
+    input stream float delay;
+    input stream int adjustment;
+    output stream float audioOut;
+
+    float[maxDelaySamples] buffer;
+
+    void run()
+    {
+        wrap<buffer.size> inPoint = 0;
+        float lastout = 0;
+        loop
+        {
+            float d = float(delay * processor.frequency) - float(adjustment);
+            if (d < 0.0f) d = 0.0f;
+            if (d > buffer.size) d = buffer.size;
+                    
+            int   di = int(d);        // integer part
+            float df = d - float(di); // fractional part
+
+            let outPoint = wrap<buffer.size>(inPoint - di);
+            buffer[inPoint++] = audioIn;
+            audioOut << (1.0f - df) * buffer[wrap<buffer.size>(outPoint - 1)] + df * buffer[outPoint];
+            advance();
+        }
+    }
+}

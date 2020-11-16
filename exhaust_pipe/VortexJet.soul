@@ -1,0 +1,70 @@
+namespace Vortex
+{
+    processor PressureDiff
+    {
+        input stream float breath_pressure;
+        input stream float reflection;
+        input stream float jet_reflection_coeff;
+        output stream float pressure_diff;
+        void run() { loop {
+            pressure_diff << breath_pressure + 0.6f * reflection;
+            advance();
+        } }
+    }
+
+    processor Edge
+    {
+        input stream float pressure_diff;
+        input stream float end_reflection_coeff;
+        input stream float reflection;
+        output stream float excitation;
+    
+        void run()
+        {
+            var njm1 = 0.0f;
+            loop
+            {
+                let r = reflection;
+                let x = pressure_diff;
+                let x2 = x*x;
+                let x3 = x2*x;
+                let nj = (-0.6f + 0.1f*r) - 0.6f*njm1 + 2.0f*(njm1*njm1);
+                var y = -0.3f*x + 0.5f*x3 + 0.1f*nj*(-x + x3);
+                //var y = x3 - x;
+                if (y < -1.0f) y = -1.0f;
+                if (y > 1.0f) y = 1.0f;
+                //excitation << 0.7f * y + 0.8f * r;
+                excitation << y + 0.6f * r;
+                advance();
+                njm1 = nj;
+            }
+        }
+    }
+
+    graph Jet(int maxdelay)
+    {
+        input differ.breath_pressure;
+        input jet_delay.delay;
+        input jet_delay.adjustment;
+        input stream float reflection;
+        input differ.jet_reflection_coeff;
+        input edge.end_reflection_coeff;
+        output stream float excitation;
+
+        let
+        {
+            differ = PressureDiff;
+            jet_delay = DelayL(maxdelay);
+            edge = Edge;
+            dcblock = DCBlocker;
+        }
+
+        connection
+        {
+            reflection -> differ.reflection, edge.reflection;
+            differ.pressure_diff -> jet_delay.audioIn;
+            jet_delay -> edge.pressure_diff;
+            edge.excitation -> dcblock -> excitation;
+        }
+    }
+}

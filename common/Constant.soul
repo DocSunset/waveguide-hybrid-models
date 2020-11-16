@@ -1,0 +1,13 @@
+processor Constant(using T, T val)
+{
+    output stream T out;
+
+    void run()
+    {
+        loop
+        {
+            out << val;
+            advance();
+        }
+    }
+}

@@ -1,0 +1,23 @@
+processor ControlChange(int control, int channel = -1)
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == control)
+        {
+            if const (channel == -1)
+            {
+                controlOut << e.value;
+            }
+            else
+            {
+                if (e.channel == channel)
+                {
+                    controlOut << e.value;
+                }
+            }
+        }
+    }
+}

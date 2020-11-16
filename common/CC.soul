@@ -1,0 +1,2820 @@
+
+
+
+
+processor CC_0_0
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 0 && e.channel == 0)
+            controlOut << e.value;
+    }
+}
+processor CC_0_1
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 1 && e.channel == 0)
+            controlOut << e.value;
+    }
+}
+processor CC_0_2
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 2 && e.channel == 0)
+            controlOut << e.value;
+    }
+}
+processor CC_0_3
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 3 && e.channel == 0)
+            controlOut << e.value;
+    }
+}
+processor CC_0_4
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 4 && e.channel == 0)
+            controlOut << e.value;
+    }
+}
+processor CC_0_5
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 5 && e.channel == 0)
+            controlOut << e.value;
+    }
+}
+processor CC_0_6
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 6 && e.channel == 0)
+            controlOut << e.value;
+    }
+}
+processor CC_0_7
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 7 && e.channel == 0)
+            controlOut << e.value;
+    }
+}
+processor CC_0_8
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 8 && e.channel == 0)
+            controlOut << e.value;
+    }
+}
+processor CC_0_9
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 9 && e.channel == 0)
+            controlOut << e.value;
+    }
+}
+processor CC_0_10
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 10 && e.channel == 0)
+            controlOut << e.value;
+    }
+}
+processor CC_0_11
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 11 && e.channel == 0)
+            controlOut << e.value;
+    }
+}
+processor CC_0_12
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 12 && e.channel == 0)
+            controlOut << e.value;
+    }
+}
+processor CC_0_13
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 13 && e.channel == 0)
+            controlOut << e.value;
+    }
+}
+processor CC_0_14
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 14 && e.channel == 0)
+            controlOut << e.value;
+    }
+}
+processor CC_0_15
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 15 && e.channel == 0)
+            controlOut << e.value;
+    }
+}
+processor CC_1_0
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 0 && e.channel == 1)
+            controlOut << e.value;
+    }
+}
+processor CC_1_1
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 1 && e.channel == 1)
+            controlOut << e.value;
+    }
+}
+processor CC_1_2
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 2 && e.channel == 1)
+            controlOut << e.value;
+    }
+}
+processor CC_1_3
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 3 && e.channel == 1)
+            controlOut << e.value;
+    }
+}
+processor CC_1_4
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 4 && e.channel == 1)
+            controlOut << e.value;
+    }
+}
+processor CC_1_5
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 5 && e.channel == 1)
+            controlOut << e.value;
+    }
+}
+processor CC_1_6
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 6 && e.channel == 1)
+            controlOut << e.value;
+    }
+}
+processor CC_1_7
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 7 && e.channel == 1)
+            controlOut << e.value;
+    }
+}
+processor CC_1_8
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 8 && e.channel == 1)
+            controlOut << e.value;
+    }
+}
+processor CC_1_9
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 9 && e.channel == 1)
+            controlOut << e.value;
+    }
+}
+processor CC_1_10
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 10 && e.channel == 1)
+            controlOut << e.value;
+    }
+}
+processor CC_1_11
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 11 && e.channel == 1)
+            controlOut << e.value;
+    }
+}
+processor CC_1_12
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 12 && e.channel == 1)
+            controlOut << e.value;
+    }
+}
+processor CC_1_13
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 13 && e.channel == 1)
+            controlOut << e.value;
+    }
+}
+processor CC_1_14
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 14 && e.channel == 1)
+            controlOut << e.value;
+    }
+}
+processor CC_1_15
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 15 && e.channel == 1)
+            controlOut << e.value;
+    }
+}
+processor CC_2_0
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 0 && e.channel == 2)
+            controlOut << e.value;
+    }
+}
+processor CC_2_1
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 1 && e.channel == 2)
+            controlOut << e.value;
+    }
+}
+processor CC_2_2
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 2 && e.channel == 2)
+            controlOut << e.value;
+    }
+}
+processor CC_2_3
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 3 && e.channel == 2)
+            controlOut << e.value;
+    }
+}
+processor CC_2_4
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 4 && e.channel == 2)
+            controlOut << e.value;
+    }
+}
+processor CC_2_5
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 5 && e.channel == 2)
+            controlOut << e.value;
+    }
+}
+processor CC_2_6
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 6 && e.channel == 2)
+            controlOut << e.value;
+    }
+}
+processor CC_2_7
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 7 && e.channel == 2)
+            controlOut << e.value;
+    }
+}
+processor CC_2_8
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 8 && e.channel == 2)
+            controlOut << e.value;
+    }
+}
+processor CC_2_9
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 9 && e.channel == 2)
+            controlOut << e.value;
+    }
+}
+processor CC_2_10
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 10 && e.channel == 2)
+            controlOut << e.value;
+    }
+}
+processor CC_2_11
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 11 && e.channel == 2)
+            controlOut << e.value;
+    }
+}
+processor CC_2_12
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 12 && e.channel == 2)
+            controlOut << e.value;
+    }
+}
+processor CC_2_13
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 13 && e.channel == 2)
+            controlOut << e.value;
+    }
+}
+processor CC_2_14
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 14 && e.channel == 2)
+            controlOut << e.value;
+    }
+}
+processor CC_2_15
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 15 && e.channel == 2)
+            controlOut << e.value;
+    }
+}
+processor CC_3_0
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 0 && e.channel == 3)
+            controlOut << e.value;
+    }
+}
+processor CC_3_1
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 1 && e.channel == 3)
+            controlOut << e.value;
+    }
+}
+processor CC_3_2
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 2 && e.channel == 3)
+            controlOut << e.value;
+    }
+}
+processor CC_3_3
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 3 && e.channel == 3)
+            controlOut << e.value;
+    }
+}
+processor CC_3_4
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 4 && e.channel == 3)
+            controlOut << e.value;
+    }
+}
+processor CC_3_5
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 5 && e.channel == 3)
+            controlOut << e.value;
+    }
+}
+processor CC_3_6
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 6 && e.channel == 3)
+            controlOut << e.value;
+    }
+}
+processor CC_3_7
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 7 && e.channel == 3)
+            controlOut << e.value;
+    }
+}
+processor CC_3_8
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 8 && e.channel == 3)
+            controlOut << e.value;
+    }
+}
+processor CC_3_9
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 9 && e.channel == 3)
+            controlOut << e.value;
+    }
+}
+processor CC_3_10
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 10 && e.channel == 3)
+            controlOut << e.value;
+    }
+}
+processor CC_3_11
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 11 && e.channel == 3)
+            controlOut << e.value;
+    }
+}
+processor CC_3_12
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 12 && e.channel == 3)
+            controlOut << e.value;
+    }
+}
+processor CC_3_13
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 13 && e.channel == 3)
+            controlOut << e.value;
+    }
+}
+processor CC_3_14
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 14 && e.channel == 3)
+            controlOut << e.value;
+    }
+}
+processor CC_3_15
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 15 && e.channel == 3)
+            controlOut << e.value;
+    }
+}
+processor CC_4_0
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 0 && e.channel == 4)
+            controlOut << e.value;
+    }
+}
+processor CC_4_1
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 1 && e.channel == 4)
+            controlOut << e.value;
+    }
+}
+processor CC_4_2
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 2 && e.channel == 4)
+            controlOut << e.value;
+    }
+}
+processor CC_4_3
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 3 && e.channel == 4)
+            controlOut << e.value;
+    }
+}
+processor CC_4_4
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 4 && e.channel == 4)
+            controlOut << e.value;
+    }
+}
+processor CC_4_5
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 5 && e.channel == 4)
+            controlOut << e.value;
+    }
+}
+processor CC_4_6
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 6 && e.channel == 4)
+            controlOut << e.value;
+    }
+}
+processor CC_4_7
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 7 && e.channel == 4)
+            controlOut << e.value;
+    }
+}
+processor CC_4_8
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 8 && e.channel == 4)
+            controlOut << e.value;
+    }
+}
+processor CC_4_9
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 9 && e.channel == 4)
+            controlOut << e.value;
+    }
+}
+processor CC_4_10
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 10 && e.channel == 4)
+            controlOut << e.value;
+    }
+}
+processor CC_4_11
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 11 && e.channel == 4)
+            controlOut << e.value;
+    }
+}
+processor CC_4_12
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 12 && e.channel == 4)
+            controlOut << e.value;
+    }
+}
+processor CC_4_13
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 13 && e.channel == 4)
+            controlOut << e.value;
+    }
+}
+processor CC_4_14
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 14 && e.channel == 4)
+            controlOut << e.value;
+    }
+}
+processor CC_4_15
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 15 && e.channel == 4)
+            controlOut << e.value;
+    }
+}
+processor CC_5_0
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 0 && e.channel == 5)
+            controlOut << e.value;
+    }
+}
+processor CC_5_1
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 1 && e.channel == 5)
+            controlOut << e.value;
+    }
+}
+processor CC_5_2
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 2 && e.channel == 5)
+            controlOut << e.value;
+    }
+}
+processor CC_5_3
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 3 && e.channel == 5)
+            controlOut << e.value;
+    }
+}
+processor CC_5_4
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 4 && e.channel == 5)
+            controlOut << e.value;
+    }
+}
+processor CC_5_5
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 5 && e.channel == 5)
+            controlOut << e.value;
+    }
+}
+processor CC_5_6
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 6 && e.channel == 5)
+            controlOut << e.value;
+    }
+}
+processor CC_5_7
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 7 && e.channel == 5)
+            controlOut << e.value;
+    }
+}
+processor CC_5_8
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 8 && e.channel == 5)
+            controlOut << e.value;
+    }
+}
+processor CC_5_9
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 9 && e.channel == 5)
+            controlOut << e.value;
+    }
+}
+processor CC_5_10
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 10 && e.channel == 5)
+            controlOut << e.value;
+    }
+}
+processor CC_5_11
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 11 && e.channel == 5)
+            controlOut << e.value;
+    }
+}
+processor CC_5_12
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 12 && e.channel == 5)
+            controlOut << e.value;
+    }
+}
+processor CC_5_13
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 13 && e.channel == 5)
+            controlOut << e.value;
+    }
+}
+processor CC_5_14
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 14 && e.channel == 5)
+            controlOut << e.value;
+    }
+}
+processor CC_5_15
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 15 && e.channel == 5)
+            controlOut << e.value;
+    }
+}
+processor CC_6_0
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 0 && e.channel == 6)
+            controlOut << e.value;
+    }
+}
+processor CC_6_1
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 1 && e.channel == 6)
+            controlOut << e.value;
+    }
+}
+processor CC_6_2
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 2 && e.channel == 6)
+            controlOut << e.value;
+    }
+}
+processor CC_6_3
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 3 && e.channel == 6)
+            controlOut << e.value;
+    }
+}
+processor CC_6_4
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 4 && e.channel == 6)
+            controlOut << e.value;
+    }
+}
+processor CC_6_5
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 5 && e.channel == 6)
+            controlOut << e.value;
+    }
+}
+processor CC_6_6
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 6 && e.channel == 6)
+            controlOut << e.value;
+    }
+}
+processor CC_6_7
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 7 && e.channel == 6)
+            controlOut << e.value;
+    }
+}
+processor CC_6_8
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 8 && e.channel == 6)
+            controlOut << e.value;
+    }
+}
+processor CC_6_9
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 9 && e.channel == 6)
+            controlOut << e.value;
+    }
+}
+processor CC_6_10
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 10 && e.channel == 6)
+            controlOut << e.value;
+    }
+}
+processor CC_6_11
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 11 && e.channel == 6)
+            controlOut << e.value;
+    }
+}
+processor CC_6_12
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 12 && e.channel == 6)
+            controlOut << e.value;
+    }
+}
+processor CC_6_13
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 13 && e.channel == 6)
+            controlOut << e.value;
+    }
+}
+processor CC_6_14
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 14 && e.channel == 6)
+            controlOut << e.value;
+    }
+}
+processor CC_6_15
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 15 && e.channel == 6)
+            controlOut << e.value;
+    }
+}
+processor CC_7_0
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 0 && e.channel == 7)
+            controlOut << e.value;
+    }
+}
+processor CC_7_1
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 1 && e.channel == 7)
+            controlOut << e.value;
+    }
+}
+processor CC_7_2
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 2 && e.channel == 7)
+            controlOut << e.value;
+    }
+}
+processor CC_7_3
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 3 && e.channel == 7)
+            controlOut << e.value;
+    }
+}
+processor CC_7_4
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 4 && e.channel == 7)
+            controlOut << e.value;
+    }
+}
+processor CC_7_5
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 5 && e.channel == 7)
+            controlOut << e.value;
+    }
+}
+processor CC_7_6
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 6 && e.channel == 7)
+            controlOut << e.value;
+    }
+}
+processor CC_7_7
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 7 && e.channel == 7)
+            controlOut << e.value;
+    }
+}
+processor CC_7_8
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 8 && e.channel == 7)
+            controlOut << e.value;
+    }
+}
+processor CC_7_9
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 9 && e.channel == 7)
+            controlOut << e.value;
+    }
+}
+processor CC_7_10
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 10 && e.channel == 7)
+            controlOut << e.value;
+    }
+}
+processor CC_7_11
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 11 && e.channel == 7)
+            controlOut << e.value;
+    }
+}
+processor CC_7_12
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 12 && e.channel == 7)
+            controlOut << e.value;
+    }
+}
+processor CC_7_13
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 13 && e.channel == 7)
+            controlOut << e.value;
+    }
+}
+processor CC_7_14
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 14 && e.channel == 7)
+            controlOut << e.value;
+    }
+}
+processor CC_7_15
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 15 && e.channel == 7)
+            controlOut << e.value;
+    }
+}
+processor CC_8_0
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 0 && e.channel == 8)
+            controlOut << e.value;
+    }
+}
+processor CC_8_1
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 1 && e.channel == 8)
+            controlOut << e.value;
+    }
+}
+processor CC_8_2
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 2 && e.channel == 8)
+            controlOut << e.value;
+    }
+}
+processor CC_8_3
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 3 && e.channel == 8)
+            controlOut << e.value;
+    }
+}
+processor CC_8_4
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 4 && e.channel == 8)
+            controlOut << e.value;
+    }
+}
+processor CC_8_5
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 5 && e.channel == 8)
+            controlOut << e.value;
+    }
+}
+processor CC_8_6
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 6 && e.channel == 8)
+            controlOut << e.value;
+    }
+}
+processor CC_8_7
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 7 && e.channel == 8)
+            controlOut << e.value;
+    }
+}
+processor CC_8_8
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 8 && e.channel == 8)
+            controlOut << e.value;
+    }
+}
+processor CC_8_9
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 9 && e.channel == 8)
+            controlOut << e.value;
+    }
+}
+processor CC_8_10
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 10 && e.channel == 8)
+            controlOut << e.value;
+    }
+}
+processor CC_8_11
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 11 && e.channel == 8)
+            controlOut << e.value;
+    }
+}
+processor CC_8_12
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 12 && e.channel == 8)
+            controlOut << e.value;
+    }
+}
+processor CC_8_13
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 13 && e.channel == 8)
+            controlOut << e.value;
+    }
+}
+processor CC_8_14
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 14 && e.channel == 8)
+            controlOut << e.value;
+    }
+}
+processor CC_8_15
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 15 && e.channel == 8)
+            controlOut << e.value;
+    }
+}
+processor CC_9_0
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 0 && e.channel == 9)
+            controlOut << e.value;
+    }
+}
+processor CC_9_1
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 1 && e.channel == 9)
+            controlOut << e.value;
+    }
+}
+processor CC_9_2
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 2 && e.channel == 9)
+            controlOut << e.value;
+    }
+}
+processor CC_9_3
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 3 && e.channel == 9)
+            controlOut << e.value;
+    }
+}
+processor CC_9_4
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 4 && e.channel == 9)
+            controlOut << e.value;
+    }
+}
+processor CC_9_5
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 5 && e.channel == 9)
+            controlOut << e.value;
+    }
+}
+processor CC_9_6
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 6 && e.channel == 9)
+            controlOut << e.value;
+    }
+}
+processor CC_9_7
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 7 && e.channel == 9)
+            controlOut << e.value;
+    }
+}
+processor CC_9_8
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 8 && e.channel == 9)
+            controlOut << e.value;
+    }
+}
+processor CC_9_9
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 9 && e.channel == 9)
+            controlOut << e.value;
+    }
+}
+processor CC_9_10
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 10 && e.channel == 9)
+            controlOut << e.value;
+    }
+}
+processor CC_9_11
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 11 && e.channel == 9)
+            controlOut << e.value;
+    }
+}
+processor CC_9_12
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 12 && e.channel == 9)
+            controlOut << e.value;
+    }
+}
+processor CC_9_13
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 13 && e.channel == 9)
+            controlOut << e.value;
+    }
+}
+processor CC_9_14
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 14 && e.channel == 9)
+            controlOut << e.value;
+    }
+}
+processor CC_9_15
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 15 && e.channel == 9)
+            controlOut << e.value;
+    }
+}
+processor CC_10_0
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 0 && e.channel == 10)
+            controlOut << e.value;
+    }
+}
+processor CC_10_1
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 1 && e.channel == 10)
+            controlOut << e.value;
+    }
+}
+processor CC_10_2
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 2 && e.channel == 10)
+            controlOut << e.value;
+    }
+}
+processor CC_10_3
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 3 && e.channel == 10)
+            controlOut << e.value;
+    }
+}
+processor CC_10_4
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 4 && e.channel == 10)
+            controlOut << e.value;
+    }
+}
+processor CC_10_5
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 5 && e.channel == 10)
+            controlOut << e.value;
+    }
+}
+processor CC_10_6
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 6 && e.channel == 10)
+            controlOut << e.value;
+    }
+}
+processor CC_10_7
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 7 && e.channel == 10)
+            controlOut << e.value;
+    }
+}
+processor CC_10_8
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 8 && e.channel == 10)
+            controlOut << e.value;
+    }
+}
+processor CC_10_9
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 9 && e.channel == 10)
+            controlOut << e.value;
+    }
+}
+processor CC_10_10
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 10 && e.channel == 10)
+            controlOut << e.value;
+    }
+}
+processor CC_10_11
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 11 && e.channel == 10)
+            controlOut << e.value;
+    }
+}
+processor CC_10_12
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 12 && e.channel == 10)
+            controlOut << e.value;
+    }
+}
+processor CC_10_13
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 13 && e.channel == 10)
+            controlOut << e.value;
+    }
+}
+processor CC_10_14
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 14 && e.channel == 10)
+            controlOut << e.value;
+    }
+}
+processor CC_10_15
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 15 && e.channel == 10)
+            controlOut << e.value;
+    }
+}
+processor CC_11_0
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 0 && e.channel == 11)
+            controlOut << e.value;
+    }
+}
+processor CC_11_1
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 1 && e.channel == 11)
+            controlOut << e.value;
+    }
+}
+processor CC_11_2
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 2 && e.channel == 11)
+            controlOut << e.value;
+    }
+}
+processor CC_11_3
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 3 && e.channel == 11)
+            controlOut << e.value;
+    }
+}
+processor CC_11_4
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 4 && e.channel == 11)
+            controlOut << e.value;
+    }
+}
+processor CC_11_5
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 5 && e.channel == 11)
+            controlOut << e.value;
+    }
+}
+processor CC_11_6
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 6 && e.channel == 11)
+            controlOut << e.value;
+    }
+}
+processor CC_11_7
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 7 && e.channel == 11)
+            controlOut << e.value;
+    }
+}
+processor CC_11_8
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 8 && e.channel == 11)
+            controlOut << e.value;
+    }
+}
+processor CC_11_9
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 9 && e.channel == 11)
+            controlOut << e.value;
+    }
+}
+processor CC_11_10
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 10 && e.channel == 11)
+            controlOut << e.value;
+    }
+}
+processor CC_11_11
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 11 && e.channel == 11)
+            controlOut << e.value;
+    }
+}
+processor CC_11_12
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 12 && e.channel == 11)
+            controlOut << e.value;
+    }
+}
+processor CC_11_13
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 13 && e.channel == 11)
+            controlOut << e.value;
+    }
+}
+processor CC_11_14
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 14 && e.channel == 11)
+            controlOut << e.value;
+    }
+}
+processor CC_11_15
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 15 && e.channel == 11)
+            controlOut << e.value;
+    }
+}
+processor CC_12_0
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 0 && e.channel == 12)
+            controlOut << e.value;
+    }
+}
+processor CC_12_1
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 1 && e.channel == 12)
+            controlOut << e.value;
+    }
+}
+processor CC_12_2
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 2 && e.channel == 12)
+            controlOut << e.value;
+    }
+}
+processor CC_12_3
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 3 && e.channel == 12)
+            controlOut << e.value;
+    }
+}
+processor CC_12_4
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 4 && e.channel == 12)
+            controlOut << e.value;
+    }
+}
+processor CC_12_5
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 5 && e.channel == 12)
+            controlOut << e.value;
+    }
+}
+processor CC_12_6
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 6 && e.channel == 12)
+            controlOut << e.value;
+    }
+}
+processor CC_12_7
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 7 && e.channel == 12)
+            controlOut << e.value;
+    }
+}
+processor CC_12_8
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 8 && e.channel == 12)
+            controlOut << e.value;
+    }
+}
+processor CC_12_9
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 9 && e.channel == 12)
+            controlOut << e.value;
+    }
+}
+processor CC_12_10
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 10 && e.channel == 12)
+            controlOut << e.value;
+    }
+}
+processor CC_12_11
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 11 && e.channel == 12)
+            controlOut << e.value;
+    }
+}
+processor CC_12_12
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 12 && e.channel == 12)
+            controlOut << e.value;
+    }
+}
+processor CC_12_13
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 13 && e.channel == 12)
+            controlOut << e.value;
+    }
+}
+processor CC_12_14
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 14 && e.channel == 12)
+            controlOut << e.value;
+    }
+}
+processor CC_12_15
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 15 && e.channel == 12)
+            controlOut << e.value;
+    }
+}
+processor CC_13_0
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 0 && e.channel == 13)
+            controlOut << e.value;
+    }
+}
+processor CC_13_1
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 1 && e.channel == 13)
+            controlOut << e.value;
+    }
+}
+processor CC_13_2
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 2 && e.channel == 13)
+            controlOut << e.value;
+    }
+}
+processor CC_13_3
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 3 && e.channel == 13)
+            controlOut << e.value;
+    }
+}
+processor CC_13_4
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 4 && e.channel == 13)
+            controlOut << e.value;
+    }
+}
+processor CC_13_5
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 5 && e.channel == 13)
+            controlOut << e.value;
+    }
+}
+processor CC_13_6
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 6 && e.channel == 13)
+            controlOut << e.value;
+    }
+}
+processor CC_13_7
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 7 && e.channel == 13)
+            controlOut << e.value;
+    }
+}
+processor CC_13_8
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 8 && e.channel == 13)
+            controlOut << e.value;
+    }
+}
+processor CC_13_9
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 9 && e.channel == 13)
+            controlOut << e.value;
+    }
+}
+processor CC_13_10
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 10 && e.channel == 13)
+            controlOut << e.value;
+    }
+}
+processor CC_13_11
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 11 && e.channel == 13)
+            controlOut << e.value;
+    }
+}
+processor CC_13_12
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 12 && e.channel == 13)
+            controlOut << e.value;
+    }
+}
+processor CC_13_13
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 13 && e.channel == 13)
+            controlOut << e.value;
+    }
+}
+processor CC_13_14
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 14 && e.channel == 13)
+            controlOut << e.value;
+    }
+}
+processor CC_13_15
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 15 && e.channel == 13)
+            controlOut << e.value;
+    }
+}
+processor CC_14_0
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 0 && e.channel == 14)
+            controlOut << e.value;
+    }
+}
+processor CC_14_1
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 1 && e.channel == 14)
+            controlOut << e.value;
+    }
+}
+processor CC_14_2
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 2 && e.channel == 14)
+            controlOut << e.value;
+    }
+}
+processor CC_14_3
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 3 && e.channel == 14)
+            controlOut << e.value;
+    }
+}
+processor CC_14_4
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 4 && e.channel == 14)
+            controlOut << e.value;
+    }
+}
+processor CC_14_5
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 5 && e.channel == 14)
+            controlOut << e.value;
+    }
+}
+processor CC_14_6
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 6 && e.channel == 14)
+            controlOut << e.value;
+    }
+}
+processor CC_14_7
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 7 && e.channel == 14)
+            controlOut << e.value;
+    }
+}
+processor CC_14_8
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 8 && e.channel == 14)
+            controlOut << e.value;
+    }
+}
+processor CC_14_9
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 9 && e.channel == 14)
+            controlOut << e.value;
+    }
+}
+processor CC_14_10
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 10 && e.channel == 14)
+            controlOut << e.value;
+    }
+}
+processor CC_14_11
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 11 && e.channel == 14)
+            controlOut << e.value;
+    }
+}
+processor CC_14_12
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 12 && e.channel == 14)
+            controlOut << e.value;
+    }
+}
+processor CC_14_13
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 13 && e.channel == 14)
+            controlOut << e.value;
+    }
+}
+processor CC_14_14
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 14 && e.channel == 14)
+            controlOut << e.value;
+    }
+}
+processor CC_14_15
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 15 && e.channel == 14)
+            controlOut << e.value;
+    }
+}
+processor CC_15_0
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 0 && e.channel == 15)
+            controlOut << e.value;
+    }
+}
+processor CC_15_1
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 1 && e.channel == 15)
+            controlOut << e.value;
+    }
+}
+processor CC_15_2
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 2 && e.channel == 15)
+            controlOut << e.value;
+    }
+}
+processor CC_15_3
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 3 && e.channel == 15)
+            controlOut << e.value;
+    }
+}
+processor CC_15_4
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 4 && e.channel == 15)
+            controlOut << e.value;
+    }
+}
+processor CC_15_5
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 5 && e.channel == 15)
+            controlOut << e.value;
+    }
+}
+processor CC_15_6
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 6 && e.channel == 15)
+            controlOut << e.value;
+    }
+}
+processor CC_15_7
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 7 && e.channel == 15)
+            controlOut << e.value;
+    }
+}
+processor CC_15_8
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 8 && e.channel == 15)
+            controlOut << e.value;
+    }
+}
+processor CC_15_9
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 9 && e.channel == 15)
+            controlOut << e.value;
+    }
+}
+processor CC_15_10
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 10 && e.channel == 15)
+            controlOut << e.value;
+    }
+}
+processor CC_15_11
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 11 && e.channel == 15)
+            controlOut << e.value;
+    }
+}
+processor CC_15_12
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 12 && e.channel == 15)
+            controlOut << e.value;
+    }
+}
+processor CC_15_13
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 13 && e.channel == 15)
+            controlOut << e.value;
+    }
+}
+processor CC_15_14
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 14 && e.channel == 15)
+            controlOut << e.value;
+    }
+}
+processor CC_15_15
+{
+    input event soul::note_events::Control controlIn;
+    output event float controlOut;
+
+    event controlIn (soul::note_events::Control e)
+    {
+        if (e.control == 15 && e.channel == 15)
+            controlOut << e.value;
+    }
+}

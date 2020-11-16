@@ -1,0 +1,63 @@
+namespace common
+{
+    float<2> one_pole_coeffs(float pole)
+    {
+        let pole_good = abs(pole) <= 1.0f;
+        static_assert(pole_good, "OnePole: pole must be less than 1.0f");
+        if (pole > 0.0f) return (1.0f - pole, -pole);
+        else             return (1.0f + pole, -pole);
+    }
+
+    float apply_one_pole(float<2> coeffs, float xn, float ynm1)
+    {
+        let yn = coeffs[0] * xn - coeffs[1] * ynm1;
+        return yn;
+    }
+}
+
+processor OnePole(float pole)
+{
+    input stream float audioIn;
+    output stream float audioOut;
+
+    float<2> coeffs;
+
+    void init()
+    {
+        coeffs = common::one_pole_coeffs(pole);
+    }
+
+    void run()
+    {
+        float ynm1 = 0;
+
+        loop
+        {
+            let yn = common::apply_one_pole(coeffs, audioIn, ynm1);
+            audioOut << yn;
+            advance();
+            ynm1 = yn;
+        }
+    }
+}
+
+processor DynamicOnePole
+{
+    input stream float audioIn;
+    input stream float pole;
+    output stream float audioOut;
+
+    void run()
+    {
+        float ynm1 = 0;
+
+        loop
+        {
+            let coeffs = common::one_pole_coeffs(pole);
+            let yn = common::apply_one_pole(coeffs, audioIn, ynm1);
+            audioOut << yn;
+            advance();
+            ynm1 = yn;
+        }
+    }
+}

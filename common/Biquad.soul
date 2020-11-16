@@ -1,0 +1,67 @@
+processor Biquad
+{
+    input stream float audioIn;
+    output stream float audioOut;
+
+    input stream float<3> b;
+    input stream float<2> a;
+
+    void run()
+    {
+        float xnm1 = 0;
+        float xnm2 = 0;
+        float ynm1 = 0;
+        float ynm2 = 0;
+
+        loop
+        {
+            let xn = audioIn;
+            let yn = b[0] * xn + b[1] * xnm1 + b[2] * xnm2 
+                               - a[0] * ynm1 - a[1] * ynm2;
+            audioOut << yn;
+            advance();
+            xnm1 = xn;
+            xnm2 = xnm1;
+            ynm1 = yn;
+            ynm2 = ynm1;
+        }
+    }
+}
+
+processor Resonator
+{
+    input stream float in;
+    input stream float frequency;
+    input stream float radius;
+    output stream float out;
+
+    void run()
+    {
+        float xnm1 = 0;
+        float xnm2 = 0;
+        float ynm1 = 0;
+        float ynm2 = 0;
+
+        loop
+        {
+            let f = clamp(frequency, 0.0f, 0.5f * float(processor.frequency));
+            let r = clamp(radius, 0.0f, 0.99999f);
+            let a2 = r * r;
+            let a1 = -2.0f * r * cos(float(twoPi) * f / float(processor.frequency));
+            let b0 = 1.0f;//0.5f - 0.5f * a2;
+            let b1 = 0.0f;
+            let b2 = 0.0f;//-b0;
+
+            let xn = in;
+            let yn = b0 * xn + b1 * xnm1 + b2 * xnm2 
+                             - a1 * ynm1 - a2 * ynm2;
+            out << yn;
+            advance();
+            xnm1 = xn;
+            xnm2 = xnm1;
+            ynm1 = yn;
+            ynm2 = ynm1;
+            advance();
+        }
+    }
+}

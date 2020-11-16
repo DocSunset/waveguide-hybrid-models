@@ -1,0 +1,26 @@
+
+{
+    "soulPatchV1":
+    {
+        "ID":               "com.yourcompany.simple_electric",
+        "version":          "0.1",
+        "name":             "simple_electric",
+        "description":      "This is a SOUL Patch called simple_electric!",
+        "category":         "synth",
+        "manufacturer":     "Your Company Name",
+        "isInstrument":     true,
+
+        "source":           [ "simple_electric.soul", 
+                              "../common/Constant.soul", 
+                              "../common/DCBlocker.soul", 
+                              "../common/EvExpSmooth.soul", 
+                              "../common/Trim.soul", 
+                              "../common/Cubic.soul", 
+                              "../common/Clamp.soul", 
+                              "../common/VCA.soul", 
+                              "../common/DelayL.soul", 
+                              "../common/DelayA.soul", 
+                              "../common/NoiseBurst.soul", 
+                              "../common/OneZero.soul" ]
+    }
+}

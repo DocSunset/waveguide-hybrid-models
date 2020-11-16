@@ -1,0 +1,67 @@
+namespace common
+{
+    // positive zero produces highpass, negative zero produces lowpass
+    float<2> one_zero_coeffs(float zero)
+    {
+        float<2> b;
+        if (zero > 0.0f) b[0] = 1.0f / (1.0f + zero);
+        else             b[0] = 1.0f / (1.0f - zero);
+        b[1] = -zero * b[0];
+        return b;
+    }
+
+    float apply_one_zero(float<2> coeffs, float xn, float xnm1)
+    {
+        let yn = coeffs[0] * xn + coeffs[1] * xnm1;
+        return yn;
+    }
+}
+
+processor OneZero(float zero)
+{
+    input stream float audioIn;
+    output stream float audioOut;
+
+    float<2> coeffs;
+
+    void init()
+    {
+        coeffs = common::one_zero_coeffs(zero);
+    }
+
+    void run()
+    {
+        float xnm1 = 0;
+
+        loop
+        {
+            let xn = audioIn;
+            let yn = common::apply_one_zero(coeffs, xn, xnm1);
+            audioOut << yn;
+            advance();
+            xnm1 = xn;
+        }
+    }
+}
+
+processor DynamicOneZero
+{
+    input stream float audioIn;
+    input stream float zero;
+    output stream float audioOut;
+
+    void run()
+    {
+        float xnm1 = 0;
+
+        loop
+        {
+            let coeffs = common::one_zero_coeffs(zero);
+            let xn = audioIn;
+            let yn = common::apply_one_zero(coeffs, xn, xnm1);
+            audioOut << yn;
+            advance();
+            xnm1 = xn;
+        }
+    }
+}

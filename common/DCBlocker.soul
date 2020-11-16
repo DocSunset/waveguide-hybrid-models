@@ -1,0 +1,21 @@
+processor DCBlocker
+{
+    input stream float audioIn;
+    output stream float audioOut;
+
+    void run()
+    {
+        float xnm1 = 0;
+        float ynm1 = 0;
+
+        loop
+        {
+            let xn = audioIn;
+            let yn = xn - xnm1 + 0.995f * ynm1;
+            audioOut << yn;
+            advance();
+            xnm1 = xn;
+            ynm1 = yn;
+        }
+    }
+}

@@ -1,0 +1,56 @@
+namespace common
+{
+    float cubic(float x, float a, float b, float c, float d)
+    {
+        let x2 = x * x;
+        let x3 = x2 * x;
+        return a * x3 + b * x2 + c * x + d;
+    }
+}
+
+processor Cubic(float a, float b, float c, float d)
+{
+    input stream float audioIn;
+    output stream float audioOut;
+
+    void run()
+    {
+        loop
+        {
+            audioOut << common::cubic(audioIn, a, b, c, d);
+            advance();
+        }
+    }
+}
+
+processor DynamicCubic
+{
+    input stream float a, b, c, d;
+    input stream float audioIn;
+    output stream float audioOut;
+
+    void run()
+    {
+        loop
+        {
+            audioOut << common::cubic(audioIn, a, b, c, d);
+            advance();
+        }
+    }
+}
+
+processor CubicMap
+{
+    input stream float audioIn;
+    input stream float a;
+    output stream float audioOut;
+
+    void run()
+    {
+        loop
+        {
+            audioOut << common::cubic(audioIn, a, 0, 1.0f-a, 0);
+            advance();
+        }
+    }
+}

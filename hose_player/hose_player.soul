@@ -1,0 +1,94 @@
+graph hose_player  [[main]]
+{
+    input event soul::midi::Message midiIn;
+    input breath.eventIn breath_pressure;
+    input event float out;
+    input event float reflection [[min: -1, max: 1]];
+    output stream float audioOut;
+
+    let
+    {
+        midiParser = soul::midi::MPEParser;
+        mapping = Mapping;
+        breath = EvExpSmooth;
+        lip = Resonator;
+        lip_reso_radius = Constant(float, 0.997f);
+        squaring = soul::gain::DynamicGain(float);
+        clamping = Clamp(-1, 1);
+        scattering = Scattering;
+        dcblock = DCBlocker;
+        bore = DelayL(100000);
+        reflection_gain = soul::gain::DynamicGain(float);
+        output_gain = soul::gain::DynamicGain(float);
+        osmooth = EvExpSmooth;
+        rsmooth = EvExpSmooth;
+    }
+
+    connection
+    {
+        midiIn -> midiParser -> mapping;
+        mapping.frequency -> lip.frequency;
+        lip_reso_radius -> lip.radius;
+        out -> osmooth -> output_gain.gain;
+        reflection -> rsmooth -> reflection_gain.gain;
+
+        breath, reflection_gain -> lip.in;
+        lip -> squaring.in;
+        lip -> squaring.gain;
+        squaring -> clamping -> scattering.deltaPressure;
+        breath -> scattering.mouthPressure;
+        reflection_gain -> scattering.borePressure;
+        scattering.pressure -> dcblock;
+        dcblock -> bore.audioIn, output_gain.in;
+        bore -> [1] -> reflection_gain.in;
+
+        output_gain -> audioOut;
+    }
+}
+
+processor Mapping
+{
+    input event (soul::note_events::NoteOn,
+                 soul::note_events::NoteOff) eventIn;
+    output stream float bore_length;
+    output stream float frequency;
+
+    float bore;
+    float freq = 440;
+    int num_active;
+
+    event eventIn (soul::note_events::NoteOn e)
+    {
+        freq = soul::noteNumberToFrequency(e.note);
+        bore = 1.0f/freq;
+        num_active++;
+    }
+
+    void run()
+    {
+        loop
+        {
+            bore_length << bore;
+            frequency << freq;
+            advance();
+        }
+    }
+}
+
+processor Scattering
+{
+    input stream float deltaPressure;
+    input stream float mouthPressure;
+    input stream float borePressure;
+
+    output stream float pressure;
+
+    void run()
+    {
+        loop
+        {
+            pressure << deltaPressure * mouthPressure + (1.0f - deltaPressure) * -borePressure;
+            advance();
+        }
+    }
+}

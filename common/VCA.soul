@@ -1,0 +1,35 @@
+processor EvVCA
+{
+    input stream float audioIn;
+    output stream float audioOut;
+    input event float gainIn;
+
+    float gain_target, gain;
+
+    event gainIn(float g) { gain_target = g; }
+
+    void run()
+    {
+        loop
+        {
+            gain = 0.9f * gain + 0.1f * gain_target;
+            audioOut << audioIn * gain;
+            advance();
+        }
+    }
+}
+
+processor VCA
+{
+    input stream float audioIn, gainIn;
+    output stream float audioOut;
+
+    void run()
+    {
+        loop
+        {
+            audioOut << audioIn * gainIn;
+            advance();
+        }
+    }
+}

@@ -1,3 +1,47 @@
+2020-11-18
+
+So the model will be something like the following. All of the phase altering
+coefficients (the reflection, whether the breath has to be subtracted or added
+to the reflection, etc.) are collected into the nonlinearities.
+
+```soul
+let xc = -0.95 * r - h; 
+let xf = -0.5  * r + h;
+let c = xc * ( m * xc + b) + h; 
+let f = xf * (xf * xf - 1); // could add a scaling term to xf for distortion gain...
+let y = clip(F * f + C * c);
+```
+
+Further excitation models may be added with their own mixing coefficients (C and F
+above).  Again, it may be necessary to seperate the excitations in order to
+delay some by a half wavelength to a full wavelength, although these adjustments
+may be possible to achieve by tweaking the math a bit as well.
+
+
+2020-11-17
+
+Where we left off, we had considered the mathematical similarities in the
+excitation mechanisms of the flute and clarinet models. I have just implemented
+an excitation model of the following form:
+
+y = clip ( x * (smx + (1-s)mx^2 + b) + qh )
+
+which I have implemented as:
+
+`let y = d * ( s*m*d + (1-s)*m*d*d + b) + q*h;`
+
+With m = -0.8, b = 0.6, q = -1, s = 0 we get the stk clarinet
+With m = 1, b = -1, q = 0, s = 1 we get something like the stk flute
+
+In between we get an unstable silent mess. Sometimes the system blows up
+suddenly. Most of the time it is just silent. I am going to have to try a
+different approach.
+
+My next test will be to have both excitation models running simultaneously and
+crossfade between their outputs. I reason that as long as the amplitude effect
+of the different models is in phase (it may be necessary to delay one of the
+excitation sections by a wavelength) then they may be able to coexist.
+
 2020-11-16
 
 So I'm trying to hybridize the cane reed excitation model seen in the STK

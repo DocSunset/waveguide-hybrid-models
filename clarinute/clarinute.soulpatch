@@ -1,0 +1,23 @@
+
+{
+    "soulPatchV1":
+    {
+        "ID":               "com.yourcompany.clarinute",
+        "version":          "0.1",
+        "name":             "clarinute",
+        "description":      "A clarinette model that is considering becoming a flute",
+        "category":         "synth",
+        "manufacturer":     "Your Company Name",
+        "isInstrument":     true,
+
+        "source":           [ "clarinute.soul" 
+                            , "../common/EvExpSmooth.soul"
+                            , "../common/NoisyBreath.soul"
+                            , "../common/VCA.soul"
+                            , "../common/DelayL.soul"
+                            , "../common/Constant.soul"
+                            , "../common/Clamp.soul"
+                            , "../common/OnePole.soul"
+                            ]
+    }
+}

@@ -1,0 +1,84 @@
+
+/**
+    This is an auto-generated SOUL patch template.
+    This example code simply plays a trivial sinewave mono-synth -
+    it's up to you to build upon this and create a real synthesiser!
+*/
+graph clarinot  [[main]]
+{
+    input delay_length.eventIn delayLength [[min: 1.0/7000.0, max: 1.0/20.0]];
+    input pressure.eventIn pressureIn [[min: -1, max: 1, init: 0]];
+    input noisiness.eventIn noiseGain [[min: 0, max: 1, init: 0.1]];
+    input excitation_slope.eventIn reedStiffness [[min: -1.0, max: 1.0, init: -0.8]];
+    input excitation_offset.eventIn reedOpening [[min: -1.0, max: 1.0, init: 0.6]];
+    input pressure_feedforward.eventIn pressure_forward [[min: -1.0, max: 1.0, init: 1.0]];
+    input excitation_crossfade.eventIn excitation_type [[min: 0.0, max: 1.0, init: 0.0]];
+    input pole.eventIn filterPole [[min: -1.0, max: 1.0, init: 0.9]];
+    input reflection_coeff.eventIn reflectionCoeff [[min: -1.0, max: 1.0, init: -0.95]];
+
+    output stream float audioOut;
+
+    let
+    {
+        breath = NoisyBreath;
+        pressure = EvExpSmooth;
+        noisiness = EvExpSmooth;
+        excitation = Excitation;
+        excitation_slope = EvExpSmooth;
+        excitation_offset = EvExpSmooth;
+        excitation_crossfade = EvExpSmooth;
+        pressure_feedforward = EvExpSmooth;
+        clipping = Clamp(-1.0, 1.0);
+        bore = DelayL(100000);
+        delay_length = EvExpSmooth;
+        losses = DynamicOnePole;
+        pole = EvExpSmooth;
+        reflection = soul::gain::DynamicGain(float);
+        reflection_coeff = EvExpSmooth;
+    }
+
+    connection
+    {
+        pressure -> breath.pressureIn;
+        noisiness -> breath.noise_gain_coeff;
+
+        breath -> excitation.h;
+        excitation_slope -> excitation.m;
+        excitation_offset -> excitation.b;
+        pressure_feedforward -> excitation.q;
+        excitation_crossfade -> excitation.s;
+
+        excitation -> clipping -> bore.audioIn;
+        delay_length -> bore.delay;
+        bore -> losses.audioIn;
+        pole -> losses.pole;
+        losses -> [1] -> reflection.in;
+        reflection_coeff -> reflection.gain;
+        reflection -> excitation.r;
+
+        losses -> audioOut;
+    }
+}
+
+processor Excitation
+{
+    input stream float h; // breath
+    input stream float r; // reflection
+    input stream float m; // slope
+    input stream float b; // offset
+    input stream float q; // pressure feed forward
+    input stream float s; // crossfade
+
+    output stream float out;
+
+    void run()
+    {
+        loop
+        {
+            let d = r + h;
+            let y = d * ( s*m*d + (1-s)*m*d*d + b) + q*h;
+            out << y;
+            advance();
+        }
+    }
+}

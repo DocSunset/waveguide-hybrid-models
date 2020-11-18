@@ -21,6 +21,8 @@ graph clarinot  [[main]]
     input clari_coeff.eventIn clariness [[min: 0, max: 1, init: 1]];
     input reed_stiffness.eventIn reedStiffness [[min: 0.0, max: 1.0, init: -0.8]];
     input reed_opening.eventIn reedOpening [[min: -1.0, max: 1.0, init: 0.6]];
+    input tone_hole_delay_ratio.eventIn toneHoleRatio [[min: 1.0, max: 10.0, init: 1.0]];
+    input tone_hole_gain_coeff.eventIn toneHoleGain [[min: -1.0, max: 1.0, init: 0.0]];
 
     output stream float audioOut;
 
@@ -52,6 +54,11 @@ graph clarinot  [[main]]
         clari_coeff = EvExpSmooth;
         reed_stiffness = EvExpSmooth;
         reed_opening = EvExpSmooth;
+        tone_hole_delay = DelayL(50000);
+        tone_hole_delay_ratio = EvExpSmooth;
+        tone_hole_delay_calc = ToneHoleDelayCalc;
+        tone_hole_gain_coeff = EvExpSmooth;
+        tone_hole_gain = soul::gain::DynamicGain(float);
     }
 
     connection
@@ -66,13 +73,24 @@ graph clarinot  [[main]]
         distortion_gain -> excitation.d;
 
         excitation -> clipping -> dcblocker -> bore.audioIn;
-        delay_length -> bore.delay, jet_delay_ratio_mul.in;
+        delay_length -> bore.delay, 
+                        jet_delay_ratio_mul.in, 
+                        tone_hole_delay_calc.lengthIn;
         bore -> losses.audioIn;
         pole -> losses.pole;
+
+        losses -> [1] -> tone_hole_delay.audioIn;
+        tone_hole_delay_ratio -> tone_hole_delay_calc.ratio;
+        tone_hole_delay_calc -> tone_hole_delay.delay;
+        tone_hole_delay -> tone_hole_gain.in;
+        tone_hole_gain_coeff -> tone_hole_gain.gain;
+        tone_hole_gain -> string_reflection.in, jet_delay.audioIn;
+
         losses -> [1] -> jet_delay.audioIn;
         jet_delay -> excitation.r;
         jet_delay_ratio -> jet_delay_ratio_mul.gain;
         jet_delay_ratio_mul -> jet_delay.delay;
+
         losses -> [1] -> string_reflection.in;
         string_refl_coeff -> string_reflection.gain;
         string_reflection -> bore.audioIn;
@@ -88,9 +106,11 @@ processor Excitation
 {
     input stream float h; // breath
     input stream float r; // reflection
+
     input stream float F; // flute amount
     input stream float r_f; // flute reflection coeff
     input stream float d; // flute distortion gain
+
     input stream float C; // clari amount
     input stream float m; // reed stiffness
     input stream float b; // reed opening
@@ -107,6 +127,22 @@ processor Excitation
             let f = xf * (xf * xf - 1);
             let y = F * f + C * c;
             out << y;
+            advance();
+        }
+    }
+}
+
+processor ToneHoleDelayCalc
+{
+    input stream float ratio;
+    input stream float lengthIn;
+    output stream float lengthOut;
+
+    void run()
+    {
+        loop
+        {
+            lengthOut << lengthIn / ratio;
             advance();
         }
     }

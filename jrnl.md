@@ -12,11 +12,28 @@ let f = xf * (xf * xf - 1); // could add a scaling term to xf for distortion gai
 let y = clip(F * f + C * c);
 ```
 
-Further excitation models may be added with their own mixing coefficients (C and F
-above).  Again, it may be necessary to seperate the excitations in order to
-delay some by a half wavelength to a full wavelength, although these adjustments
-may be possible to achieve by tweaking the math a bit as well.
+Further excitation models may be added with their own mixing coefficients (C
+and F above).  Again, it may be necessary to seperate the excitations in order
+to delay some by a half wavelength to a full wavelength, although these
+adjustments may be possible to achieve by tweaking the math a bit as well.
 
+---
+
+This went very well. The excitation models work well together or alone. There
+is lots of room for improvement in the mapping from the sliders to the actual
+parameter values, but there you go. It seems to work nicely. Lets try adding
+the flute jet delay.
+
+Yes, that also works marvelously; it's particularly intersting to explore how
+the jet delay interacts with the clarinet model!
+
+Lets go further: I would like to add the "tone hole" simulation from the '92
+clarinet model, a second waveguide branch for simulating excitation position
+along the string, karplus-strong style string excitations with comb filtering
+and character filtering, a bowing excitation model, and the '92 lip excitation
+model.
+
+For starts though, lets just add the clarinet tone hole.
 
 2020-11-17
 

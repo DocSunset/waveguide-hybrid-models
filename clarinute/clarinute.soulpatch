@@ -17,6 +17,7 @@
                             , "../common/DelayL.soul"
                             , "../common/Constant.soul"
                             , "../common/Clamp.soul"
+                            , "../common/DCBlocker.soul"
                             , "../common/OnePole.soul"
                             ]
     }

@@ -2,8 +2,8 @@ graph hose_player  [[main]]
 {
     input event soul::midi::Message midiIn;
     input breath.eventIn breath_pressure;
-    input event float out;
-    input event float reflection [[min: -1, max: 1]];
+    input event out_gain_coeff.eventIn outputGain [[init: 1]];
+    input event reflection_gain_coeff.eventIn reflectionGain [[min: -1, max: 1, init: -0.85]];
     output stream float audioOut;
 
     let
@@ -13,6 +13,7 @@ graph hose_player  [[main]]
         breath = EvExpSmooth;
         lip = Resonator;
         lip_reso_radius = Constant(float, 0.997f);
+        lip_gain = Constant(float, 0.03f);
         squaring = soul::gain::DynamicGain(float);
         clamping = Clamp(-1, 1);
         scattering = Scattering;
@@ -20,8 +21,8 @@ graph hose_player  [[main]]
         bore = DelayL(100000);
         reflection_gain = soul::gain::DynamicGain(float);
         output_gain = soul::gain::DynamicGain(float);
-        osmooth = EvExpSmooth;
-        rsmooth = EvExpSmooth;
+        out_gain_coeff = EvExpSmooth;
+        reflection_gain_coeff = EvExpSmooth;
     }
 
     connection
@@ -29,8 +30,9 @@ graph hose_player  [[main]]
         midiIn -> midiParser -> mapping;
         mapping.frequency -> lip.frequency;
         lip_reso_radius -> lip.radius;
-        out -> osmooth -> output_gain.gain;
-        reflection -> rsmooth -> reflection_gain.gain;
+        lip_gain -> lip.gain;
+        out_gain_coeff -> output_gain.gain;
+        reflection_gain_coeff -> reflection_gain.gain;
 
         breath, reflection_gain -> lip.in;
         lip -> squaring.in;

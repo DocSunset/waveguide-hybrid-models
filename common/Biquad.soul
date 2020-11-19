@@ -33,6 +33,7 @@ processor Resonator
     input stream float in;
     input stream float frequency;
     input stream float radius;
+    input stream float gain;
     output stream float out;
 
     void run()
@@ -52,7 +53,7 @@ processor Resonator
             let b1 = 0.0f;
             let b2 = 0.0f;//-b0;
 
-            let xn = in;
+            let xn = in * gain;
             let yn = b0 * xn + b1 * xnm1 + b2 * xnm2 
                              - a1 * ynm1 - a2 * ynm2;
             out << yn;

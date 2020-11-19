@@ -1,40 +1,3 @@
-2020-11-18
-
-So the model will be something like the following. All of the phase altering
-coefficients (the reflection, whether the breath has to be subtracted or added
-to the reflection, etc.) are collected into the nonlinearities.
-
-```soul
-let xc = -0.95 * r - h; 
-let xf = -0.5  * r + h;
-let c = xc * ( m * xc + b) + h; 
-let f = xf * (xf * xf - 1); // could add a scaling term to xf for distortion gain...
-let y = clip(F * f + C * c);
-```
-
-Further excitation models may be added with their own mixing coefficients (C
-and F above).  Again, it may be necessary to seperate the excitations in order
-to delay some by a half wavelength to a full wavelength, although these
-adjustments may be possible to achieve by tweaking the math a bit as well.
-
----
-
-This went very well. The excitation models work well together or alone. There
-is lots of room for improvement in the mapping from the sliders to the actual
-parameter values, but there you go. It seems to work nicely. Lets try adding
-the flute jet delay.
-
-Yes, that also works marvelously; it's particularly intersting to explore how
-the jet delay interacts with the clarinet model!
-
-Lets go further: I would like to add the "tone hole" simulation from the '92
-clarinet model, a second waveguide branch for simulating excitation position
-along the string, karplus-strong style string excitations with comb filtering
-and character filtering, a bowing excitation model, and the '92 lip excitation
-model.
-
-For starts though, lets just add the clarinet tone hole.
-
 2020-11-17
 
 Where we left off, we had considered the mathematical similarities in the
@@ -171,3 +134,46 @@ y = clip ( ax^3 + cx^2 + bx + qh )
 
 Now I'm getting into whirlwind territory. The question now becomes, what are
 the criteria for this polynomial to make sound?
+
+2020-11-18
+
+So the model will be something like the following. All of the phase altering
+coefficients (the reflection, whether the breath has to be subtracted or added
+to the reflection, etc.) are collected into the nonlinearities.
+
+```soul
+let xc = -0.95 * r - h; 
+let xf = -0.5  * r + h;
+let c = xc * ( m * xc + b) + h; 
+let f = xf * (xf * xf - 1); // could add a scaling term to xf for distortion gain...
+let y = clip(F * f + C * c);
+```
+
+Further excitation models may be added with their own mixing coefficients (C
+and F above).  Again, it may be necessary to seperate the excitations in order
+to delay some by a half wavelength to a full wavelength, although these
+adjustments may be possible to achieve by tweaking the math a bit as well.
+
+---
+
+This went very well. The excitation models work well together or alone. There
+is lots of room for improvement in the mapping from the sliders to the actual
+parameter values, but there you go. It seems to work nicely. Lets try adding
+the flute jet delay.
+
+Yes, that also works marvelously; it's particularly intersting to explore how
+the jet delay interacts with the clarinet model!
+
+Lets go further: I would like to add the "tone hole" simulation from the '92
+clarinet model, a second waveguide branch for simulating excitation position
+along the string, karplus-strong style string excitations with comb filtering
+and character filtering, a bowing excitation model, and the '92 lip excitation
+model.
+
+For starts though, lets just add the clarinet tone hole.
+
+2020-11-19
+
+Today we add the trumpet excitation. That would bring the model up to parity
+with the whirlwind, at least in terms of excitation. 
+

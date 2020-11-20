@@ -46,14 +46,15 @@ processor Resonator
         loop
         {
             let f = clamp(frequency, 0.0f, 0.5f * float(processor.frequency));
+            let theta = float(twoPi) * f / float(processor.frequency);
             let r = clamp(radius, 0.0f, 0.99999f);
             let a2 = r * r;
-            let a1 = -2.0f * r * cos(float(twoPi) * f / float(processor.frequency));
-            let b0 = 1.0f;//0.5f - 0.5f * a2;
+            let a1 = -2.0f * r * cos(theta);
+            let b0 = 1.0f;
             let b1 = 0.0f;
-            let b2 = 0.0f;//-b0;
+            let b2 = -1.0f;
 
-            let xn = in * gain;
+            let xn = in;
             let yn = b0 * xn + b1 * xnm1 + b2 * xnm2 
                              - a1 * ynm1 - a2 * ynm2;
             out << yn;
@@ -62,7 +63,6 @@ processor Resonator
             xnm2 = xnm1;
             ynm1 = yn;
             ynm2 = ynm1;
-            advance();
         }
     }
 }

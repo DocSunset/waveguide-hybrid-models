@@ -177,3 +177,5 @@ For starts though, lets just add the clarinet tone hole.
 Today we add the trumpet excitation. That would bring the model up to parity
 with the whirlwind, at least in terms of excitation. 
 
+I'm having no luck at all getting the hose player model to work. I've tried
+twice now to very meticulously copy the STK implementation, but to no avail.

@@ -1,96 +1,79 @@
 graph hose_player  [[main]]
 {
-    input event soul::midi::Message midiIn;
-    input breath.eventIn breath_pressure;
-    input event out_gain_coeff.eventIn outputGain [[init: 1]];
-    input event reflection_gain_coeff.eventIn reflectionGain [[min: -1, max: 1, init: -0.85]];
+    input breath.eventIn breathPressure;
+    input delay_length.eventIn delayLength [[min: 1/7000.0, max: 1/20.0, init: 1/440.0]];
+    input lip_freq.eventIn lipFreq [[min: 20, max: 16000, init: 440.0]];
     output stream float audioOut;
 
     let
     {
-        midiParser = soul::midi::MPEParser;
-        mapping = Mapping;
+        test_noise = soul::noise::White;
         breath = EvExpSmooth;
-        lip = Resonator;
-        lip_reso_radius = Constant(float, 0.997f);
-        lip_gain = Constant(float, 0.03f);
-        squaring = soul::gain::DynamicGain(float);
-        clamping = Clamp(-1, 1);
-        scattering = Scattering;
+        delay_length = EvExpSmooth;
+        lip_freq = EvExpSmooth;
+        lip = LipExcitation;
         dcblock = DCBlocker;
         bore = DelayL(100000);
-        reflection_gain = soul::gain::DynamicGain(float);
-        output_gain = soul::gain::DynamicGain(float);
-        out_gain_coeff = EvExpSmooth;
+        reflection = soul::gain::DynamicGain(float);
         reflection_gain_coeff = EvExpSmooth;
     }
 
     connection
     {
-        midiIn -> midiParser -> mapping;
-        mapping.frequency -> lip.frequency;
-        lip_reso_radius -> lip.radius;
-        lip_gain -> lip.gain;
-        out_gain_coeff -> output_gain.gain;
-        reflection_gain_coeff -> reflection_gain.gain;
+        breath -> lip.breathPressure;
+        lip_freq -> lip.frequency;
 
-        breath, reflection_gain -> lip.in;
-        lip -> squaring.in;
-        lip -> squaring.gain;
-        squaring -> clamping -> scattering.deltaPressure;
-        breath -> scattering.mouthPressure;
-        reflection_gain -> scattering.borePressure;
-        scattering.pressure -> dcblock;
-        dcblock -> bore.audioIn, output_gain.in;
-        bore -> [1] -> reflection_gain.in;
-
-        output_gain -> audioOut;
+        lip -> dcblock;
+        dcblock -> bore.audioIn, audioOut;
+        delay_length -> bore.delay;
+        bore -> [1] -> lip.borePressure;
     }
 }
 
-processor Mapping
+processor LipExcitation
 {
-    input event (soul::note_events::NoteOn,
-                 soul::note_events::NoteOff) eventIn;
-    output stream float bore_length;
-    output stream float frequency;
-
-    float bore;
-    float freq = 440;
-    int num_active;
-
-    event eventIn (soul::note_events::NoteOn e)
-    {
-        freq = soul::noteNumberToFrequency(e.note);
-        bore = 1.0f/freq;
-        num_active++;
-    }
-
-    void run()
-    {
-        loop
-        {
-            bore_length << bore;
-            frequency << freq;
-            advance();
-        }
-    }
-}
-
-processor Scattering
-{
-    input stream float deltaPressure;
-    input stream float mouthPressure;
+    input stream float breathPressure;
     input stream float borePressure;
-
-    output stream float pressure;
+    input stream float frequency;
+    
+    output stream float out;
 
     void run()
     {
+        float xnm1 = 0;
+        float xnm2 = 0;
+        float ynm1 = 0;
+        float ynm2 = 0;
+
         loop
         {
-            pressure << deltaPressure * mouthPressure + (1.0f - deltaPressure) * -borePressure;
+            let mouthPressure = 0.3f * breathPressure;
+            let bPressure = 0.85f * borePressure;
+            var deltaPressure = mouthPressure - bPressure;
+
+            let f = clamp(frequency, 0.0f, 0.5f * float(processor.frequency));
+            let theta = float(twoPi) * f / float(processor.frequency);
+            let r = 0.997f;
+            let a2 = r * r;
+            let a1 = -2.0f * r * cos(theta);
+            let b0 = 1.0f;
+            let b1 = 0.0f;
+            let b2 = 0.0f;
+
+            let xn = deltaPressure * 0.03f;
+            float yn = b0 * xn + b1 * xnm1 + b2 * xnm2 
+                               - (a1 * ynm1 + a2 * ynm2);
+
+            deltaPressure = yn * yn;
+            if (deltaPressure > 1.0f) deltaPressure = 1.0f;
+            out << deltaPressure * mouthPressure + (1.0f - deltaPressure) * bPressure;
+
             advance();
+
+            xnm1 = xn;
+            xnm2 = xnm1;
+            ynm1 = yn;
+            ynm2 = ynm1;
         }
     }
 }

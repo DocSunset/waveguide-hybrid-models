@@ -1,0 +1,20 @@
+
+{
+    "soulPatchV1":
+    {
+        "ID":               "com.yourcompany.bowed",
+        "version":          "0.1",
+        "name":             "bowed",
+        "description":      "This is a SOUL Patch called bowed!",
+        "category":         "synth",
+        "manufacturer":     "Your Company Name",
+        "isInstrument":     true,
+
+        "source":           [ "bowed.soul" 
+                            , "../common/DelayA.soul" 
+                            , "../common/OnePole.soul" 
+                            , "../common/EvExpSmooth.soul" 
+                            , "../common/Clamp.soul" 
+                            ]
+    }
+}

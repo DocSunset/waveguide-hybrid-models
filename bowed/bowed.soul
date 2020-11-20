@@ -1,0 +1,112 @@
+graph bowed  [[main]]
+{
+    input delay_length.eventIn stringLength [[min: 1/7000.0f, max: 1/20.0f, init: 1/440.0f]];
+    input string_position.eventIn stringPosition [[init: 0.9f]];
+
+    input pole.eventIn filterPole [[min: -1, max: 1, init: 0.75f]];
+
+    input bow_velocity.eventIn bowVelocity [[min: -1, max: 1, init: 0]];
+    input offset.eventIn excitationOffset [[min: -0.4f, max: 0.4f, init: 0.001f]];
+    input slope.eventIn excitationSlope [[min: 0.01f, max: 6, init: 3]];
+
+    output stream float audioOut;
+
+    let
+    {
+        delay_length = EvExpSmooth;
+        string_position = EvExpSmooth;
+        lengths_calc = DelayLengths;
+
+        bstring = DelayA(50000);
+        loss_filter = DynamicOnePole;
+        pole = EvExpSmooth;
+
+        nstring = DelayA(50000);
+
+        bow = BowExcitation;
+        bow_velocity = EvExpSmooth;
+        offset = EvExpSmooth;
+        slope = EvExpSmooth;
+
+        noise = soul::noise::White;
+    }
+
+    connection
+    {
+        delay_length -> lengths_calc.string_length;
+        string_position -> lengths_calc.position;
+        lengths_calc.nlength -> nstring.delay;
+        lengths_calc.blength -> bstring.delay;
+
+        bow_velocity -> bow.bowVelocity;
+        offset -> bow.offset;
+        slope -> bow.slope;
+
+        bow.bout -> bstring.audioIn;
+        bstring -> loss_filter.audioIn;
+        loss_filter -> [1] -> bow.bin;
+        loss_filter -> audioOut;
+
+        bow.nout -> nstring.audioIn;
+        nstring -> [1] -> bow.nin;
+    }
+}
+
+
+//==============================================================================
+processor DelayLengths
+{
+    input stream float string_length;
+    input stream float position;
+    output stream float nlength;
+    output stream float blength;
+
+    void run()
+    {
+        loop
+        {
+            let p = clamp(position, 0.0f, 1.0f);
+            blength <<       p  * string_length;
+            nlength << (1.0f-p) * string_length;
+            advance();
+        }
+    }
+}
+processor BowExcitation
+{
+    input stream float bowVelocity;
+    input stream float offset;
+    input stream float slope;
+    
+    input stream float nin;
+    input stream float bin;
+    output stream float nout;
+    output stream float bout;
+
+    void run()
+    {
+        loop
+        {
+            let bridgeReflection = -0.95f * bin;
+            let nutReflection = -nin;
+            if (abs(bowVelocity) < 0.01f)
+            {
+                nout << bridgeReflection;
+                bout << nutReflection;
+            }
+            else
+            {
+                let stringVelocity = bridgeReflection + nutReflection;
+                let deltaV = bowVelocity - stringVelocity;
+                float64 sample = slope * (deltaV + offset);
+                let a = float(abs(sample) + 0.75f);
+                let p = pow(a, -4.0f);
+                let c = clamp(p, 0.0f, 1.0f);
+                let newVelocity = deltaV * c;
+                nout << bridgeReflection + newVelocity;
+                bout << nutReflection + newVelocity;
+            }
+            advance();
+        }
+    }
+}

@@ -1,23 +1,24 @@
 graph NoisyBreath
 {
-    input stream float pressureIn;
-    input stream float noise_gain_coeff;
-    output stream float pressureOut;
+    input breath_pressure.eventIn breath;
+    input noise_coeff.eventIn noise;
+    output stream float out;
 
     let
     {
+        breath_pressure = EvExpSmooth;
+        noise_coeff = EvExpSmooth;
         noise = soul::noise::White;
-        noise_mixer = VCA;
-        noise_gain = VCA;
+        noise_mixer = soul::gain::DynamicGain(float);
+        noise_gain = soul::gain::DynamicGain(float);
     }
 
     connection
     {
-        // breath
-        pressureIn -> noise_mixer.audioIn;
-        noise -> noise_gain.audioIn;
-        noise_gain_coeff -> noise_gain.gainIn;
-        noise_gain -> noise_mixer.gainIn;
-        pressureIn, noise_mixer -> pressureOut;
+        breath_pressure -> noise_mixer.in;
+        noise -> noise_gain.in;
+        noise_coeff -> noise_gain.gain;
+        noise_gain -> noise_mixer.gain;
+        breath_pressure, noise_mixer -> out;
     }
 }

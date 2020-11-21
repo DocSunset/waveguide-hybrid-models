@@ -179,3 +179,22 @@ with the whirlwind, at least in terms of excitation.
 
 I'm having no luck at all getting the hose player model to work. I've tried
 twice now to very meticulously copy the STK implementation, but to no avail.
+
+2020-11-21
+
+Now that the bowed string is working, and given the time left until the
+deadline, I think the natural next step is to start consolidating the main
+thrust of the work I've done; clean up and final hybrids.
+
+Here's the todo list:
+- simple electric
+- flute
+- blotar
+- clarinet
+- clarinute
+- bowed
+- saxofony
+- saxobowy
+
+If theres time after thats all ready for presentation, then I will add the
+blotar into the mix with the saxobowy

@@ -1,0 +1,21 @@
+
+{
+    "soulPatchV1":
+    {
+        "ID":               "com.yourcompany.saxofony",
+        "version":          "0.1",
+        "name":             "saxofony",
+        "description":      "This is a SOUL Patch called saxofony!",
+        "category":         "synth",
+        "manufacturer":     "Your Company Name",
+        "isInstrument":     true,
+
+        "source":           [ "saxofony.soul" 
+                            , "../common/DelayA.soul" 
+                            , "../common/OnePole.soul" 
+                            , "../common/EvExpSmooth.soul" 
+                            , "../common/Clamp.soul" 
+                            , "../common/DCBlocker.soul" 
+                            ]
+    }
+}

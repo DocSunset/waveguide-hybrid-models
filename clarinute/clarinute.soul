@@ -1,21 +1,31 @@
+/*
+
+WARNING
+
+This model is a bit unstable in some regions; because the clarinet excitation
+doesn't categorically reject DC offset of provide any definite clipping, when
+clariness is set high turning up the string reflection coefficient can cause
+the model to blow up. Be very careful with your ears and loudspeakers!!!
+
+*/
 graph clarinute  [[main]]
 {
     input breath.pressure breathPressure [[min: 0, max: 1, init: 0]];
     input breath.noise noise [[min: 0, max: 1, init: 0.02]];
 
-    input delay_length.eventIn delayLength [[min: 1.0/7000.0, max: 1.0/20.0]];
-    input pole.eventIn filterPole [[min: -1.0, max: 1.0, init: 0.9]];
-    input string_refl_coeff.eventIn stringReflection [[min: 0, max: 1, init: 0.45]];
+    input delay_length.eventIn delayLength [[min: 1.0/7000.0, max: 1.0/20.0, init: 1/440.0]];
+    input pole.eventIn filterPole [[min: -1.0, max: 1.0, init: 0.7]];
+    input string_refl_coeff.eventIn stringReflection [[min: 0, max: 1, init: 0.0]];
 
     input flute_coeff.eventIn flutiness [[min: 0, max: 1, init: 0]];
-    input jet_delay_ratio.eventIn jetRatio [[min: 0, max: 2, init: 1.111]];
+    input jet_delay_ratio.eventIn jetRatio [[min: 0, max: 2, init: 0.0]];
     input jet_refl_coeff.eventIn jetReflection [[min: -1, max: 1, init: -0.45]];
     input distortion_gain.eventIn distortionGain [[min: 1, max: 2, init: 1]];
 
     input clari_coeff.eventIn clariness [[min: 0, max: 1, init: 1]];
-    input reed_stiffness.eventIn reedStiffness [[min: 0.0, max: 1.0, init: -0.8]];
-    input reed_opening.eventIn reedOpening [[min: -1.0, max: 1.0, init: 0.6]];
-    input tone_hole_delay_ratio.eventIn toneHoleRatio [[min: 1.0, max: 10.0, init: 1.0]];
+    input reed_stiffness.eventIn reedStiffness [[min: 0.0, max: 1.0, init: 0.3]];
+    input reed_opening.eventIn reedOpening [[min: -1.0, max: 1.0, init: 0.7]];
+    input tone_hole_delay_length.eventIn toneHoleLength [[min: 0.0, max: 1.0]];
     input tone_hole_gain_coeff.eventIn toneHoleGain [[min: -1.0, max: 1.0, init: 0.0]];
 
     output stream float audioOut;
@@ -25,8 +35,6 @@ graph clarinute  [[main]]
         breath = NoisyBreath;
 
         excitation = Excitation;
-        clipping = Clamp(-1.0, 1.0);
-        dcblocker = DCBlocker;
 
         bore = DelayL(50000);
         delay_length = EvExpSmooth;
@@ -41,14 +49,15 @@ graph clarinute  [[main]]
         jet_delay_ratio_mul = soul::gain::DynamicGain(float);
         jet_delay_ratio = EvExpSmooth;
         jet_refl_coeff = EvExpSmooth;
+        dcblocker = DCBlocker;
         distortion_gain = EvExpSmooth;
 
         clari_coeff = EvExpSmooth;
         reed_stiffness = EvExpSmooth;
         reed_opening = EvExpSmooth;
         tone_hole_delay = DelayL(50000);
-        tone_hole_delay_ratio = EvExpSmooth;
-        tone_hole_delay_calc = ToneHoleDelayCalc;
+        tone_hole_delay_length = EvExpSmooth;
+        tone_hole_delay_mul = soul::gain::DynamicGain(float);
         tone_hole_gain_coeff = EvExpSmooth;
         tone_hole_gain = soul::gain::DynamicGain(float);
     }
@@ -60,20 +69,23 @@ graph clarinute  [[main]]
         reed_opening -> excitation.b;
         jet_refl_coeff -> excitation.r_f;
         distortion_gain -> excitation.d;
+        flute_coeff -> excitation.F;
+        clari_coeff -> excitation.C;
 
-        excitation -> clipping -> dcblocker -> bore.audioIn;
+        excitation.flute_out -> dcblocker -> bore.audioIn; // DCBlock flute only
+        excitation.clarinet_out -> bore.audioIn;
         delay_length -> bore.delay, 
                         jet_delay_ratio_mul.in, 
-                        tone_hole_delay_calc.lengthIn;
+                        tone_hole_delay_mul.in;
         bore -> losses.audioIn;
         pole -> losses.pole;
 
         losses -> [1] -> tone_hole_delay.audioIn;
-        tone_hole_delay_ratio -> tone_hole_delay_calc.ratio;
-        tone_hole_delay_calc -> tone_hole_delay.delay;
+        tone_hole_delay_length -> tone_hole_delay_mul.gain;
+        tone_hole_delay_mul -> tone_hole_delay.delay;
         tone_hole_delay -> tone_hole_gain.in;
         tone_hole_gain_coeff -> tone_hole_gain.gain;
-        tone_hole_gain -> string_reflection.in, jet_delay.audioIn;
+        tone_hole_gain -> jet_delay.audioIn, bore.audioIn;
 
         losses -> [1] -> jet_delay.audioIn;
         jet_delay -> excitation.r;
@@ -85,9 +97,6 @@ graph clarinute  [[main]]
         string_reflection -> bore.audioIn;
 
         losses -> audioOut;
-
-        flute_coeff -> excitation.F;
-        clari_coeff -> excitation.C;
     }
 }
 
@@ -104,7 +113,8 @@ processor Excitation
     input stream float m; // reed stiffness
     input stream float b; // reed opening
 
-    output stream float out;
+    output stream float flute_out;
+    output stream float clarinet_out;
 
     void run()
     {
@@ -112,26 +122,10 @@ processor Excitation
         {
             let xc = -0.95f * r - h; 
             let xf = (r_f * r + h) * d;
-            let c = xc * ( -m * xc + b) + h; 
-            let f = xf * (xf * xf - 1);
-            let y = F * f + C * c;
-            out << y;
-            advance();
-        }
-    }
-}
-
-processor ToneHoleDelayCalc
-{
-    input stream float ratio;
-    input stream float lengthIn;
-    output stream float lengthOut;
-
-    void run()
-    {
-        loop
-        {
-            lengthOut << lengthIn / ratio;
+            let c = xc * clamp( -m * xc + b, -1.0f, 1.0f) + h; 
+            let f = clamp(xf * xf * xf - xf, -1.0f, 1.0f);
+            flute_out << F * f;
+            clarinet_out << C * c;
             advance();
         }
     }

@@ -2,12 +2,12 @@
 {
     "soulPatchV1":
     {
-        "ID":               "com.yourcompany.flute",
+        "ID":               "com.traviswest.flute",
         "version":          "0.1",
         "name":             "flute",
-        "description":      "A flute model",
+        "description":      "A physically modelled flute synthesizer a la Perry Cook",
         "category":         "synth",
-        "manufacturer":     "Your Company Name",
+        "manufacturer":     "Travis West",
         "isInstrument":     true,
 
         "source":           [ "flute.soul" 

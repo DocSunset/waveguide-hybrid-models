@@ -44,6 +44,7 @@ graph bowed  [[main]]
 
         bow.bout -> bstring.audioIn;
         bstring -> loss_filter.audioIn;
+        pole -> loss_filter.pole;
         loss_filter -> [1] -> bow.bin;
         loss_filter -> audioOut;
 

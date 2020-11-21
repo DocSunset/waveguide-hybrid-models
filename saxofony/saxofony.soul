@@ -1,4 +1,4 @@
-graph saxopfony  [[main]]
+graph saxofony  [[main]]
 {
     input delay_length.eventIn stringLength [[min: 1/7000.0f, max: 1/20.0f, init: 1/440.0f]];
     input string_position.eventIn stringPosition [[init: 0.9f]];
@@ -44,7 +44,8 @@ graph saxopfony  [[main]]
 
         reed.bout -> bstring.audioIn;
         bstring -> loss_filter.audioIn;
-        loss_filter -> dcblocker -> [1] -> reed.bin;
+        pole -> loss_filter.pole;
+        loss_filter -> [1] -> reed.bin;
 
         reed.nout -> nstring.audioIn;
         nstring -> [1] -> reed.nin;

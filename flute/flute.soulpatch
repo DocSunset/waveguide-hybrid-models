@@ -2,15 +2,15 @@
 {
     "soulPatchV1":
     {
-        "ID":               "com.yourcompany.clarinute",
+        "ID":               "com.yourcompany.flute",
         "version":          "0.1",
-        "name":             "clarinute",
-        "description":      "A clarinette model that is considering becoming a flute",
+        "name":             "flute",
+        "description":      "A flute model",
         "category":         "synth",
         "manufacturer":     "Your Company Name",
         "isInstrument":     true,
 
-        "source":           [ "clarinute.soul" 
+        "source":           [ "flute.soul" 
                             , "../common/EvExpSmooth.soul"
                             , "../common/NoisyBreath.soul"
                             , "../common/DelayL.soul"

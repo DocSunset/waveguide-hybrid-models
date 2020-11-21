@@ -2,18 +2,20 @@
 {
     "soulPatchV1":
     {
-        "ID":               "com.yourcompany.clarinet",
+        "ID":               "com.traviswest.clarinet",
         "version":          "0.1",
         "name":             "clarinet",
-        "description":      "This is a SOUL Patch called clarinet!",
+        "description":      "A port of the STK Clarinet model to soul",
         "category":         "synth",
-        "manufacturer":     "Your Company Name",
+        "manufacturer":     "Travis West",
         "isInstrument":     true,
 
         "source":           [ "clarinet.soul" 
                             , "../common/EvExpSmooth.soul"
                             , "../common/NoisyBreath.soul"
                             , "../common/DelayL.soul"
+                            , "../common/Clamp.soul"
+                            , "../common/DCBlocker.soul"
                             , "../common/OnePole.soul"
                             ]
     }

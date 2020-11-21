@@ -1,6 +1,6 @@
 graph NoisyBreath
 {
-    input breath_pressure.eventIn breath;
+    input breath_pressure.eventIn pressure;
     input noise_coeff.eventIn noise;
     output stream float out;
 
@@ -8,7 +8,7 @@ graph NoisyBreath
     {
         breath_pressure = EvExpSmooth;
         noise_coeff = EvExpSmooth;
-        noise = soul::noise::White;
+        noise_gen = soul::noise::White;
         noise_mixer = soul::gain::DynamicGain(float);
         noise_gain = soul::gain::DynamicGain(float);
     }
@@ -16,7 +16,7 @@ graph NoisyBreath
     connection
     {
         breath_pressure -> noise_mixer.in;
-        noise -> noise_gain.in;
+        noise_gen -> noise_gain.in;
         noise_coeff -> noise_gain.gain;
         noise_gain -> noise_mixer.gain;
         breath_pressure, noise_mixer -> out;

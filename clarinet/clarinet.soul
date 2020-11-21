@@ -1,0 +1,59 @@
+graph clarinet  [[main]]
+{
+    input delay_length.eventIn delayLength [[min: 1.0/7000.0, max: 1.0/20.0, init: 1/440.0]];
+    input breath.pressure;
+    input breath.noise;
+    input stiffness.eventIn reedStiffness [[min: -1.0, max: 1.0, init: -0.3]];
+    input opening.eventIn reedOpening [[min: -1.0, max: 1.0, init: 0.7]];
+    input pole.eventIn filterPole [[min: -1.0, max: 1.0, init: 0.9]];
+
+    output stream float audioOut;
+
+    let
+    {
+        breath = NoisyBreath;
+        reed = ReedExcitation;
+        stiffness = EvExpSmooth;
+        opening = EvExpSmooth;
+        bore = DelayL(100000);
+        delay_length = EvExpSmooth;
+        losses = DynamicOnePole;
+        pole = EvExpSmooth;
+    }
+
+    connection
+    {
+        delay_length -> bore.delay;
+
+        breath -> reed.breath_pressure;
+        stiffness -> reed.stiffness;
+        opening -> reed.opening;
+        reed -> bore.audioIn;
+        bore -> losses.audioIn;
+        pole -> losses.pole;
+        losses -> [1] -> reed.bore_pressure;
+
+        reed -> audioOut;
+    }
+}
+
+processor ReedExcitation
+{
+    input stream float breath_pressure;
+    input stream float bore_pressure;
+    input stream float stiffness;
+    input stream float opening;
+
+    output stream float out;
+
+    void run()
+    {
+        loop
+        {
+            let pressure_diff = -0.95f * bore_pressure - breath_pressure;
+            let reed_table = clamp(pressure_diff * stiffness + opening, -1.0f, 1.0f);
+            out << breath_pressure + pressure_diff * reed_table;
+            advance();
+        }
+    }
+}

@@ -2,21 +2,18 @@
 {
     "soulPatchV1":
     {
-        "ID":               "com.yourcompany.clarinot",
+        "ID":               "com.yourcompany.clarinet",
         "version":          "0.1",
-        "name":             "clarinot",
-        "description":      "This is a SOUL Patch called clarinot!",
+        "name":             "clarinet",
+        "description":      "This is a SOUL Patch called clarinet!",
         "category":         "synth",
         "manufacturer":     "Your Company Name",
         "isInstrument":     true,
 
-        "source":           [ "clarinot.soul" 
+        "source":           [ "clarinet.soul" 
                             , "../common/EvExpSmooth.soul"
                             , "../common/NoisyBreath.soul"
-                            , "../common/VCA.soul"
                             , "../common/DelayL.soul"
-                            , "../common/Constant.soul"
-                            , "../common/Clamp.soul"
                             , "../common/OnePole.soul"
                             ]
     }

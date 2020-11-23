@@ -1,0 +1,38 @@
+processor BowExcitation
+{
+    input stream float velocity;
+    input stream float offset;
+    input stream float slope;
+    
+    input stream float nin;
+    input stream float bin;
+    output stream float nout;
+    output stream float bout;
+
+    void run()
+    {
+        loop
+        {
+            let bridgeReflection = -0.95f * bin;
+            let nutReflection = -nin;
+            if (abs(velocity) < 0.01f)
+            {
+                nout << bridgeReflection;
+                bout << nutReflection;
+            }
+            else
+            {
+                let stringVelocity = bridgeReflection + nutReflection;
+                let deltaV = velocity - stringVelocity;
+                float64 sample = slope * (deltaV + offset);
+                let a = float(abs(sample) + 0.75f);
+                let p = pow(a, -4.0f);
+                let c = clamp(p, 0.0f, 1.0f);
+                let newVelocity = deltaV * c;
+                nout << bridgeReflection + newVelocity;
+                bout << nutReflection + newVelocity;
+            }
+            advance();
+        }
+    }
+}

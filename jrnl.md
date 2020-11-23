@@ -187,14 +187,44 @@ deadline, I think the natural next step is to start consolidating the main
 thrust of the work I've done; clean up and final hybrids.
 
 Here's the todo list:
-- simple electric
-- flute
-- blotar
-- clarinet
-- clarinute
-- bowed
-- saxofony
-- saxobowy
+[x] flute
+[x] blotar
+[x] clarinet
+[x] clarinute
+[x] bowed
+[x] saxofony
+[x] saxobowy
 
 If theres time after thats all ready for presentation, then I will add the
 blotar into the mix with the saxobowy
+
+2020-11-22
+
+There are a number of ways that you could go about combining multiple excitation
+methods simultaneously. With the current clarinot implementation, I am mixing
+the outputs of both excitation models and feeding them the same inputs from
+both the waveguide and the energy source (breath pressure). This seems to work
+alright, but there are definitely some issues; in particular, when both
+excitation methods are turned all the way up it leads to pretty severe clipping.
+
+What if instead I adjust the amount of energy only, while taking both outputs
+simultaneously? In short, this doesn't work at all. The model is unstable and
+immediately blows up as soon as energy is put into the system; I guess this
+is because, even if one of the excitation models isn't receiving any energy,
+it still gets the state from the rest of the system. Having both outputs
+without any attenuation then causes everything to blow up.
+
+One tricky detail in combining the saxofony and bowed models is that the saxo
+model has a lot of DC offset on its waveguides that causes the bowed model
+to become unstable. Fortunately, the bowed model doesn't seem perturbed by 
+having a DC blocker in its loop.
+
+It seems to matter more which of the excitation models receives/outputs more
+energy from the system rather than which one receives greater energy input.
+In general, the bow model appears to dominate the reed model, and it doesn't
+seem possible to make them cooperate harmoniously. I wonder if there is a phase
+mismatch...
+
+2020-11-23
+
+

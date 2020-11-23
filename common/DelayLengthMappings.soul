@@ -1,0 +1,19 @@
+processor StringPositionDelayLengths
+{
+    input stream float string_length;
+    input stream float position;
+    output stream float nlength;
+    output stream float blength;
+
+    void run()
+    {
+        loop
+        {
+            let p = clamp(position, 0.0f, 1.0f);
+            blength <<       p  * string_length;
+            nlength << (1.0f-p) * string_length;
+            advance();
+        }
+    }
+}
+

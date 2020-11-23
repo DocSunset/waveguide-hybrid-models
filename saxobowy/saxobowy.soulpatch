@@ -2,21 +2,24 @@
 {
     "soulPatchV1":
     {
-        "ID":               "com.yourcompany.bowed",
+        "ID":               "com.yourcompany.saxobowy",
         "version":          "0.1",
-        "name":             "bowed",
-        "description":      "This is a SOUL Patch called bowed!",
+        "name":             "saxobowy",
+        "description":      "This is a SOUL Patch called saxobowy!",
         "category":         "synth",
         "manufacturer":     "Your Company Name",
         "isInstrument":     true,
 
-        "source":           [ "bowed.soul" 
-                            , "bowExcitation.soul" 
+        "source":           [ "saxobowy.soul" 
+                            , "../bowed/bowExcitation.soul"
+                            , "../saxofony/reedExcitation.soul"
+                            , "../common/NoisyBreath.soul" 
                             , "../common/DelayLengthMappings.soul" 
                             , "../common/DelayA.soul" 
                             , "../common/OnePole.soul" 
                             , "../common/EvExpSmooth.soul" 
                             , "../common/Clamp.soul" 
+                            , "../common/DCBlocker.soul" 
                             ]
     }
 }

@@ -14,15 +14,13 @@ processor DelayL(int maxDelaySamples)
         loop
         {
             float d = float(delay * processor.frequency) - float(adjustment);
-            if (d < 0.0f) d = 0.0f;
-            if (d > buffer.size) d = buffer.size;
-                    
+            d = clamp(d, 0.0f, float(buffer.size));
             int   di = int(d);        // integer part
             float df = d - float(di); // fractional part
 
             let outPoint = wrap<buffer.size>(inPoint - di);
             buffer[inPoint++] = audioIn;
-            audioOut << (1.0f - df) * buffer[wrap<buffer.size>(outPoint - 1)] + df * buffer[outPoint];
+            audioOut <<  df * buffer[wrap<buffer.size>(outPoint - 1)] + (1.0f - df) * buffer[outPoint];
             advance();
         }
     }

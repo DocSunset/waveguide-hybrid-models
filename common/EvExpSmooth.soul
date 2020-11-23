@@ -12,9 +12,10 @@ processor EvExpSmooth
 
     void run()
     {
+        value = 0;
         loop
         {
-            value = 0.9f * value + 0.1f * target;
+            value = 0.999f * value + 0.001f * target;
             streamOut << value;
             advance();
         }

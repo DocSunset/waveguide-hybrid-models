@@ -33,7 +33,6 @@ processor Resonator
     input stream float in;
     input stream float frequency;
     input stream float radius;
-    input stream float gain;
     output stream float out;
 
     void run()

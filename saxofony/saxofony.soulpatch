@@ -11,6 +11,9 @@
         "isInstrument":     true,
 
         "source":           [ "saxofony.soul" 
+                            , "reedExcitation.soul" 
+                            , "../common/NoisyBreath.soul" 
+                            , "../common/DelayLengthMappings.soul" 
                             , "../common/DelayA.soul" 
                             , "../common/OnePole.soul" 
                             , "../common/EvExpSmooth.soul" 

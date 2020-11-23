@@ -15,7 +15,7 @@ graph bowed  [[main]]
     {
         delay_length = EvExpSmooth;
         string_position = EvExpSmooth;
-        lengths_calc = DelayLengths;
+        lengths_calc = StringPositionDelayLengths;
 
         bstring = DelayA(50000);
         loss_filter = DynamicOnePole;
@@ -38,7 +38,7 @@ graph bowed  [[main]]
         lengths_calc.nlength -> nstring.delay;
         lengths_calc.blength -> bstring.delay;
 
-        bow_velocity -> bow.bowVelocity;
+        bow_velocity -> bow.velocity;
         offset -> bow.offset;
         slope -> bow.slope;
 
@@ -50,64 +50,5 @@ graph bowed  [[main]]
 
         bow.nout -> nstring.audioIn;
         nstring -> [1] -> bow.nin;
-    }
-}
-
-
-//==============================================================================
-processor DelayLengths
-{
-    input stream float string_length;
-    input stream float position;
-    output stream float nlength;
-    output stream float blength;
-
-    void run()
-    {
-        loop
-        {
-            let p = clamp(position, 0.0f, 1.0f);
-            blength <<       p  * string_length;
-            nlength << (1.0f-p) * string_length;
-            advance();
-        }
-    }
-}
-processor BowExcitation
-{
-    input stream float bowVelocity;
-    input stream float offset;
-    input stream float slope;
-    
-    input stream float nin;
-    input stream float bin;
-    output stream float nout;
-    output stream float bout;
-
-    void run()
-    {
-        loop
-        {
-            let bridgeReflection = -0.95f * bin;
-            let nutReflection = -nin;
-            if (abs(bowVelocity) < 0.01f)
-            {
-                nout << bridgeReflection;
-                bout << nutReflection;
-            }
-            else
-            {
-                let stringVelocity = bridgeReflection + nutReflection;
-                let deltaV = bowVelocity - stringVelocity;
-                float64 sample = slope * (deltaV + offset);
-                let a = float(abs(sample) + 0.75f);
-                let p = pow(a, -4.0f);
-                let c = clamp(p, 0.0f, 1.0f);
-                let newVelocity = deltaV * c;
-                nout << bridgeReflection + newVelocity;
-                bout << nutReflection + newVelocity;
-            }
-            advance();
-        }
     }
 }

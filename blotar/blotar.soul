@@ -1,15 +1,15 @@
 graph blotar  [[main]]
 {
     input event soul::midi::Message midiIn;
-    input pre_distortion_output_gain.gainIn dry [[min: 0, max: 1, init: 0.5]];
-    input post_distortion_output_gain.gainIn wet [[min: 0, max: 1]];
-    input event float breath_noise [[min: 0, max: 1]];
-    input event float breath_pressure [[min: 0, max: 1]];
-    input pre_distortion_gain.gainIn distortion_gain [[min: 0, max: 5, init: 1]];
-    input feedback_gain.gainIn feedback [[min: 0, max: 1]];
-    input event float loss [[min: 0, max: 1, init: 0.998]];
+    input pre_distortion_output_gain_coeff.eventIn dry [[min: 0, max: 1, init: 0.5]];
+    input post_distortion_output_gain_coeff.eventIn wet [[min: 0, max: 1]];
+    input breath.noise breath_noise [[min: 0, max: 1]];
+    input breath.pressure breath_pressure [[min: 0, max: 1]];
+    input pre_distortion_gain_coeff.eventIn distortion_gain [[min: 0, max: 5, init: 1]];
+    input feedback_gain_coeff.eventIn feedback [[min: 0, max: 1]];
+    input loss.eventIn stringLoss [[min: 0, max: 1, init: 0.998]];
     input mapping.jet_delay_ratio [[min: 0, max: 2]];
-    input event float crossfade [[min: 0, max: 1, init: 1.0f]];
+    input crossfade.eventIn filterType [[min: 0, max: 1, init: 1.0f]];
     output stream float audioOut;
 
     let
@@ -21,19 +21,21 @@ graph blotar  [[main]]
         dcblock = DCBlocker;
         string_delay = DelayA(100000);
         filter = BlotarFilter;
-        string_loss = VCA;
+        string_loss = soul::gain::DynamicGain(float);
         distortion = Cubic(-1.0f, 0.0f, 1.0f, 0.0f);
         clipping = Clamp(-2.0f/3.0f, 2.0f/3.0f);
         feedback_delay = DelayL(100000);
-        pre_distortion_gain = EvVCA;
-        feedback_gain = EvVCA;
-        pre_distortion_output_gain = EvVCA;
-        post_distortion_output_gain = EvVCA;
+        pre_distortion_gain_coeff = EvExpSmooth;
+        feedback_gain_coeff = EvExpSmooth;
+        pre_distortion_output_gain_coeff = EvExpSmooth;
+        post_distortion_output_gain_coeff = EvExpSmooth;
+        pre_distortion_gain = soul::gain::DynamicGain(float);
+        feedback_gain = soul::gain::DynamicGain(float);
+        pre_distortion_output_gain = soul::gain::DynamicGain(float);
+        post_distortion_output_gain = soul::gain::DynamicGain(float);
         delay_adjustment = Constant(int, 1);
-        lsmooth = EvExpSmooth;
-        fsmooth = EvExpSmooth;
-        bsmooth = EvExpSmooth;
-        nsmooth = EvExpSmooth;
+        loss = EvExpSmooth;
+        crossfade = EvExpSmooth;
     }
 
     connection
@@ -42,23 +44,25 @@ graph blotar  [[main]]
         mapping.burst -> pluck.burst;
         mapping.string_len -> string_delay.delay;
         mapping.jet_len -> feedback_delay.delay;
-        loss -> lsmooth -> string_loss.gainIn;
-        crossfade -> fsmooth -> filter.crossfade;
+        loss -> string_loss.gain;
+        crossfade -> filter.crossfade;
+        pre_distortion_gain_coeff -> pre_distortion_gain.gain;
+        feedback_gain_coeff -> feedback_gain.gain;
+        pre_distortion_output_gain_coeff -> pre_distortion_output_gain.gain;
+        post_distortion_output_gain_coeff -> post_distortion_output_gain.gain;
 
         pluck, feedback_delay, string_loss -> string_delay.audioIn;
         string_delay -> dcblock;
         dcblock -> filter.audioIn;
-        filter -> [1] -> string_loss.audioIn;
+        filter -> [1] -> string_loss.in;
 
-        breath_pressure -> bsmooth -> breath.pressureIn;
-        breath_noise -> nsmooth -> breath.noise_gain_coeff;
-        string_delay, breath -> pre_distortion_gain.audioIn;
-        pre_distortion_gain.audioOut -> distortion -> clipping;
-        clipping -> feedback_gain.audioIn;
+        string_delay, breath -> pre_distortion_gain.in;
+        pre_distortion_gain -> distortion -> clipping;
+        clipping -> feedback_gain.in;
         feedback_gain -> [1] -> feedback_delay.audioIn;
         
-        dcblock -> pre_distortion_output_gain.audioIn;
-        clipping -> post_distortion_output_gain.audioIn; 
+        dcblock -> pre_distortion_output_gain.in;
+        clipping -> post_distortion_output_gain.in; 
         pre_distortion_output_gain, post_distortion_output_gain -> audioOut;
 
         delay_adjustment -> string_delay.adjustment;

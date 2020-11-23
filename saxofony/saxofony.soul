@@ -1,34 +1,35 @@
 graph saxofony  [[main]]
 {
+    input breath.pressure breathPressure;
+    input breath.noise;
+
     input delay_length.eventIn stringLength [[min: 1/7000.0f, max: 1/20.0f, init: 1/440.0f]];
     input string_position.eventIn stringPosition [[init: 0.9f]];
 
     input pole.eventIn filterPole [[min: -1, max: 1, init: 0.75f]];
 
-    input breath.eventIn breathPressure [[min: -1, max: 1, init: 0]];
-    input offset.eventIn excitationOffset [[min: 0.0f, max: 1.0f, init: 0.7f]];
-    input slope.eventIn excitationSlope [[min: 0.0f, max: 1, init: 0.3f]];
+    input reed_opening.eventIn reedOpening [[min: 0.0f, max: 1.0f, init: 0.7f]];
+    input reed_stiffness.eventIn reedStiffness [[min: 0.0f, max: 1, init: 0.3f]];
 
     output stream float audioOut;
 
     let
     {
+        breath = NoisyBreath;
+
         delay_length = EvExpSmooth;
         string_position = EvExpSmooth;
-        lengths_calc = DelayLengths;
+        lengths_calc = StringPositionDelayLengths;
 
         bstring = DelayA(50000);
         loss_filter = DynamicOnePole;
         pole = EvExpSmooth;
-        dcblocker = DCBlocker;
 
         nstring = DelayA(50000);
 
         reed = ReedExcitation;
-        breath = EvExpSmooth;
-        // todo: noise
-        offset = EvExpSmooth;
-        slope = EvExpSmooth;
+        reed_opening = EvExpSmooth;
+        reed_stiffness = EvExpSmooth;
     }
 
     connection
@@ -39,8 +40,8 @@ graph saxofony  [[main]]
         lengths_calc.blength -> bstring.delay;
 
         breath -> reed.breath;
-        offset -> reed.offset;
-        slope -> reed.slope;
+        reed_opening -> reed.offset;
+        reed_stiffness -> reed.slope;
 
         reed.bout -> bstring.audioIn;
         bstring -> loss_filter.audioIn;
@@ -51,53 +52,5 @@ graph saxofony  [[main]]
         nstring -> [1] -> reed.nin;
 
         reed.out -> audioOut;
-    }
-}
-
-
-//==============================================================================
-processor DelayLengths
-{
-    input stream float string_length;
-    input stream float position;
-    output stream float nlength;
-    output stream float blength;
-
-    void run()
-    {
-        loop
-        {
-            let p = clamp(position, 0.0f, 1.0f);
-            blength <<       p  * string_length;
-            nlength << (1.0f-p) * string_length;
-            advance();
-        }
-    }
-}
-processor ReedExcitation
-{
-    input stream float breath;
-    input stream float offset;
-    input stream float slope;
-    
-    input stream float nin;
-    input stream float bin;
-    output stream float nout;
-    output stream float bout;
-    output stream float out;
-
-    void run()
-    {
-        loop
-        {
-            let bridgeReflection = -0.95f * bin;
-            let stringVelocity = bridgeReflection - nin;
-            let pressureDiff = breath - stringVelocity;
-            nout << bridgeReflection;
-            let reedTable = clamp(offset + (slope * pressureDiff), -1.0f, 1.0f);
-            bout << breath - (pressureDiff * reedTable) - bridgeReflection;
-            out << stringVelocity;
-            advance();
-        }
     }
 }

@@ -23,6 +23,7 @@ graph clarinute  [[main]]
     input distortion_gain.eventIn distortionGain [[min: 1, max: 2, init: 1]];
 
     input clari_coeff.eventIn clariness [[min: 0, max: 1, init: 1]];
+    input clari_refl_coeff.eventIn clarinetReflection [[min: -1, max: 1, init: -0.95]];
     input reed_stiffness.eventIn reedStiffness [[min: 0.0, max: 1.0, init: 0.3]];
     input reed_opening.eventIn reedOpening [[min: -1.0, max: 1.0, init: 0.7]];
     input tone_hole_delay_length.eventIn toneHoleLength [[min: 0.0, max: 1.0]];
@@ -53,6 +54,7 @@ graph clarinute  [[main]]
         distortion_gain = EvExpSmooth;
 
         clari_coeff = EvExpSmooth;
+        clari_refl_coeff = EvExpSmooth;
         reed_stiffness = EvExpSmooth;
         reed_opening = EvExpSmooth;
         tone_hole_delay = DelayL(50000);
@@ -65,6 +67,7 @@ graph clarinute  [[main]]
     connection
     {
         breath -> excitation.h;
+        clari_refl_coeff -> excitation.r_c;
         reed_stiffness -> excitation.m;
         reed_opening -> excitation.b;
         jet_refl_coeff -> excitation.r_f;
@@ -110,6 +113,7 @@ processor Excitation
     input stream float d; // flute distortion gain
 
     input stream float C; // clari amount
+    input stream float r_c; // clari reflection coeff
     input stream float m; // reed stiffness
     input stream float b; // reed opening
 
@@ -120,7 +124,7 @@ processor Excitation
     {
         loop
         {
-            let xc = -0.95f * r - h; 
+            let xc = r_c * r - h; 
             let xf = (r_f * r + h) * d;
             let c = xc * clamp( -m * xc + b, -1.0f, 1.0f) + h; 
             let f = clamp(xf * xf * xf - xf, -1.0f, 1.0f);

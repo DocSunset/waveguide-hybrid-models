@@ -1,0 +1,133 @@
+graph saxobowy  [[main]]
+{
+    input energy.pressure energyInput;
+    input energy.noise;
+    input breath_amount.eventIn blowing;
+    input bowvel_amount.eventIn bowing;
+
+    input delay_length.eventIn stringLength [[min: 1/7000.0f, max: 1/20.0f, init: 1/440.0f]];
+    input string_position.eventIn stringPosition [[init: 0.9f]];
+
+    input pole.eventIn filterPole [[min: -1, max: 1, init: 0.75f]];
+
+    input reed_coeff.eventIn reediness;
+    input bow_coeff.eventIn bowiness;
+
+    input reed_opening.eventIn reedOpening [[min: 0.0f, max: 1.0f, init: 0.7f]];
+    input reed_stiffness.eventIn reedStiffness [[min: 0.0f, max: 1, init: 0.3f]];
+
+    input bow_table_offset.eventIn bowingDirection [[min: -0.4f, max: 0.4f, init: 0.001f]];
+    input bowing_force.eventIn bowingForce [[min: 0.01f, max: 6, init: 3]];
+
+    output stream float audioOut;
+
+    let
+    {
+        energy = NoisyBreath;
+        breath_amount = EvExpSmooth;
+        bowvel_amount = EvExpSmooth;
+        breath_mul = soul::gain::DynamicGain(float);
+        bowvel_mul = soul::gain::DynamicGain(float);
+        energy_to_breath = Abs(float);
+        energy_to_bowvel = soul::gain::FixedGain(float, 0.3f);
+
+        delay_length = EvExpSmooth;
+        string_position = EvExpSmooth;
+        lengths_calc = StringPositionDelayLengths;
+
+        bstring = DelayA(50000);
+        loss_filter = DynamicOnePole;
+        pole = EvExpSmooth;
+        dcblocker = DCBlocker;
+
+        nstring = DelayA(50000);
+
+        reed = ReedExcitation;
+        reed_opening = EvExpSmooth;
+        reed_stiffness = EvExpSmooth;
+
+        bow = BowExcitation;
+        bow_table_offset = EvExpSmooth;
+        bowing_force = EvExpSmooth;
+
+        reed_coeff = EvExpSmooth;
+        reed_bgain = soul::gain::DynamicGain(float);
+        reed_ngain = soul::gain::DynamicGain(float);
+        bow_coeff = EvExpSmooth;
+        bow_bgain = soul::gain::DynamicGain(float);
+        bow_ngain = soul::gain::DynamicGain(float);
+
+        outdcblocker = DCBlocker;
+    }
+
+    connection
+    {
+        delay_length -> lengths_calc.string_length;
+        string_position -> lengths_calc.position;
+        lengths_calc.nlength -> nstring.delay;
+        lengths_calc.blength -> bstring.delay;
+
+        energy -> breath_mul.in;
+        breath_amount -> breath_mul.gain;
+        breath_mul -> energy_to_breath -> reed.breath;
+        reed_opening -> reed.offset;
+        reed_stiffness -> reed.slope;
+
+        energy -> bowvel_mul.in;
+        bowvel_amount -> bowvel_mul.gain;
+        bowvel_mul -> energy_to_bowvel -> bow.velocity;
+        bow_table_offset -> bow.offset;
+        bowing_force -> bow.slope;
+
+        reed_coeff -> reed_bgain.gain, reed_ngain.gain;
+        bow_coeff -> bow_bgain.gain, bow_ngain.gain;
+
+        reed.bout -> reed_bgain.in;
+         bow.bout ->  bow_bgain.in;
+        reed_bgain, bow_bgain -> bstring.audioIn;
+        bstring -> loss_filter.audioIn;
+        pole -> loss_filter.pole;
+        loss_filter -> [1] -> reed.bin;
+        loss_filter -> [1] -> bow.bin;
+
+        reed.nout -> reed_ngain.in;
+         bow.nout ->  bow_ngain.in;
+        reed_ngain, bow_ngain -> nstring.audioIn;
+        nstring -> [1] -> reed.nin, bow.nin;
+
+        loss_filter -> outdcblocker -> audioOut;
+    }
+}
+
+processor Abs(using SampleType)
+{
+    input stream SampleType in;
+    output stream SampleType out;
+
+    void run()
+    {
+        loop
+        {
+            out << abs(in);
+            advance();
+        }
+    }
+}
+
+processor Balance
+{
+    input stream float in;
+    input stream float pan;
+    output stream float out1;
+    output stream float out2;
+
+    void run()
+    {
+        loop
+        {
+            out1 << in * (1.0f-pan);
+            out2 << in * pan;
+            advance();
+        }
+    }
+}

@@ -1,0 +1,27 @@
+processor ReedExcitation
+{
+    input stream float breath;
+    input stream float offset;
+    input stream float slope;
+    
+    input stream float nin;
+    input stream float bin;
+    output stream float nout;
+    output stream float bout;
+    output stream float out;
+
+    void run()
+    {
+        loop
+        {
+            let bridgeReflection = -0.95f * bin;
+            let stringVelocity = bridgeReflection - nin;
+            let pressureDiff = breath - stringVelocity;
+            nout << bridgeReflection;
+            let reedTable = clamp(offset + (slope * pressureDiff), -1.0f, 1.0f);
+            bout << breath - (pressureDiff * reedTable) - bridgeReflection;
+            out << stringVelocity;
+            advance();
+        }
+    }
+}

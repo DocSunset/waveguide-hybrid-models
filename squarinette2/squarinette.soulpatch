@@ -4,8 +4,8 @@
     {
         "ID":               "com.traviswest.squarinette",
         "version":          "0.1",
-        "name":             "squarinette1",
-        "description":      "A proof of concept demonstrating the minimum non-linearity required to produce oscillation",
+        "name":             "squarinette2",
+        "description":      "An (over-)simplified clarinet using nonlinear clipping for excitation",
         "category":         "synth",
         "manufacturer":     "Travis West",
         "isInstrument":     true,

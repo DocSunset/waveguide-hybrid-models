@@ -73,23 +73,27 @@ def flute_map(r, h):
   return np.clip(p, -1, 1)
 
 def line_map(x, m):
-  return np.clip(m * x + b, -1, 1)
+  return np.clip(-2*m * x + 0.0001, -1, 1)
+
+def saturation_map(x, m):
+  mx = 10*m * x
+  return -mx / ((1 + abs(mx)**3.5)**(1/3.5))
 
 def logistic_map(x, r):
   xs = (x + 1) / 2.0
   y = 4*r*x*(1-x)
   return y * 2 - 1.0
 
-func = logistic_map
+func = line_map
 
-plot_cobweb(func, 0.0, 0.9)
-plot_cobweb(func, 0.1, 0.9)
-plot_cobweb(func, 0.2, 0.9)
-plot_cobweb(func, 0.3, 0.9)
-plot_cobweb(func, 0.4, 0.9)
-plot_cobweb(func, 0.5, 0.9)
-plot_cobweb(func, 0.6, 0.9)
-plot_cobweb(func, 0.7, 0.9)
-plot_cobweb(func, 0.8, 0.9)
-plot_cobweb(func, 0.9, 0.9)
-plot_cobweb(func, 1.0, 0.9)
+plot_cobweb(func, 0.0, 0.005)
+plot_cobweb(func, 0.1, 0.005)
+plot_cobweb(func, 0.2, 0.005)
+plot_cobweb(func, 0.3, 0.005)
+plot_cobweb(func, 0.4, 0.005)
+plot_cobweb(func, 0.5, 0.005)
+plot_cobweb(func, 0.6, 0.005)
+plot_cobweb(func, 0.7, 0.005)
+plot_cobweb(func, 0.8, 0.005)
+plot_cobweb(func, 0.9, 0.005)
+plot_cobweb(func, 1.0, 0.005)

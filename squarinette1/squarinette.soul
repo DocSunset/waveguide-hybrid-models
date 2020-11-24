@@ -16,7 +16,7 @@ graph squarinette  [[main]]
     let
     {
         breath = NoisyBreath;
-        reed = CaneReedExcitation;
+        reed = ClippedLineExcitation;
         bore = DelayL(50000);
         delay_length = EvExpSmooth;
         losses = DynamicOnePole;
@@ -54,7 +54,7 @@ graph squarinette  [[main]]
     }
 }
 
-processor CaneReedExcitation
+processor ClippedLineExcitation
 {
     input stream float h; // breath
     input stream float r; // reflection

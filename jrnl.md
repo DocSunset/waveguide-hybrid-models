@@ -268,3 +268,13 @@ This actually works quite nicely, with just a few additional considerations:
 The resulting instrument is quite interesting, especially along with
 interesting delay line structures inspired by real instruments such as the
 filter and the 1992 extra-delay-line tone hole model.
+
+2020-11-24
+
+I added a second squarinette using a softer clipping function instead of a hard
+digital clamping. This has a nicer more gradual ramp up as the slope or
+clipping edge parameter is increased.
+
+All of these clarinet inspired models (including the original STK clarinet, I
+think) have some noticeable aliasing, particularly if the loss filter pole is
+turned down toward zero. 

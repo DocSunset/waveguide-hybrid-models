@@ -1,0 +1,22 @@
+
+{
+    "soulPatchV1":
+    {
+        "ID":               "com.traviswest.squarinette",
+        "version":          "0.1",
+        "name":             "squarinette",
+        "description":      "A proof of concept demonstrating the minimum non-linearity required to produce oscillation",
+        "category":         "synth",
+        "manufacturer":     "Travis West",
+        "isInstrument":     true,
+
+        "source":           [ "squarinette.soul" 
+                            , "../common/EvExpSmooth.soul"
+                            , "../common/NoisyBreath.soul"
+                            , "../common/DelayL.soul"
+                            , "../common/Clamp.soul"
+                            , "../common/DCBlocker.soul"
+                            , "../common/OnePole.soul"
+                            ]
+    }
+}

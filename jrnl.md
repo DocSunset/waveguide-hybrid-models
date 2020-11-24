@@ -227,4 +227,44 @@ mismatch...
 
 2020-11-23
 
+So I've been thinking about the way that these physical models work on a purely
+mathematical level. Throw out all of the physical intepretation of the models
+and just consider them as non-linear maps from x[n] to x[n+1]. What is it about
+these models that allows them to make sound? What are the minimum conditions
+needed for any model to produce sound?
 
+The case of the clarinet is particularly simple, because it can be reduced to
+just a non-linearity attached to a waveguide. The non-linearity happens to be a
+quadratic function with clipping, with some shifting and scaling so that the
+part of the quadratic map where you get the oscillations happens to lie in the
+plus and minus one region that we like to work with for audio. 
+
+The only necessary requirement to make a map oscillate is that the slope near
+the intersection of the line y = x has to be less than -1, and there has to be
+something to keep the value from just diverging to infinity. A line with
+clipping is enough to do that, and using this as the non-linearity coupled to
+the waveguide also succeeds in producing a square wave. In this model you can
+activate oscillation by turning the slope down past -1; I call it the
+squarinette(1).
+
+Unfortunately, there isn't much expressive control of the oscillations. They
+just snap on as soon as the slope passes the value where there is a bifurcation
+in the topology of the map. The clarinet has the nice property that the
+amplitude of its orbit gets bigger as the breath pressure gets pushed up, which
+translates into a nice amplitude (and also interestingly brightness) increase
+as the breath pressure goes up.  This property is also seen in the logistic
+map; as the parameter of the logistic map increases, the amplitude of its
+(at times strange) orbit grows as well.
+
+This leads me to wonder if a productive instrument could be produced using the
+logistic map as a starting point.  The map itself isn't amenable to being
+scaled or shifted around, but this could be done at the output.
+
+This actually works quite nicely, with just a few additional considerations:
+ - the input to the logistic map has to be clamped to make sure the model can't
+   blow up, since the map diverges with negative inputs or those greater than 1
+ - the output reqires a DC blocker to remove the DC offset inherent in the map
+
+The resulting instrument is quite interesting, especially along with
+interesting delay line structures inspired by real instruments such as the
+filter and the 1992 extra-delay-line tone hole model.

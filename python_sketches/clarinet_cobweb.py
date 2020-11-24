@@ -4,10 +4,6 @@ import numpy as np
 from matplotlib import rc
 import matplotlib.pyplot as plt
 
-# Use LaTeX throughout the figure for consistency
-rc('font', **{'family': 'serif', 'serif': ['Computer Modern'], 'size': 16})
-rc('text', usetex=True)
-
 # Figure dpi
 dpi = 72
 
@@ -43,9 +39,9 @@ def plot_cobweb(f, r, x0, nmax=400):
     ax.grid(which='minor', alpha=0.5)
     ax.grid(which='major', alpha=0.5)
     ax.set_aspect('equal')
-    ax.set_xlabel('$x$')
-    ax.set_ylabel(f.latex_label)
-    ax.set_title('$x_0 = {:.1}, r = {:.2}$'.format(x0, r))
+    ax.set_xlabel('x[n]')
+    ax.set_ylabel('x[n+1]')
+    ax.set_title('x = f(x)')
 
     plt.savefig('cobweb_{:.1}_{:.2}.png'.format(x0, r), dpi=dpi)
 
@@ -64,19 +60,36 @@ class AnnotatedFunction:
     def __call__(self, *args, **kwargs):
         return self.func(*args, **kwargs)
 
-clarinet_map_latex = r'$f(x) = d * (md + b) + r$'
+m = -0.3
+b = 0.7
+def clarinet_map(r, h):
+  x = -(0.95*r + h)
+  p = x * np.clip(m * x + b, -1, 1) + h
+  return p
 
-m = -0.8
-b = 0.6
-def clarinet_map(x, r):
-  d = -(0.95*x + r)
-  p = d * (m * d + b) + r
+def flute_map(r, h):
+  x = r - h;
+  p = x * x * x - x;
   return np.clip(p, -1, 1)
 
-def flute_map(x, r):
-  return np.clip(p, -1, 1)
+def line_map(x, m):
+  return np.clip(m * x + b, -1, 1)
 
-func = AnnotatedFunction(clarinet_map, clarinet_map_latex)
+def logistic_map(x, r):
+  xs = (x + 1) / 2.0
+  y = 4*r*x*(1-x)
+  return y * 2 - 1.0
 
-plot_cobweb(func, 0.5, 0.02)
-plot_cobweb(func, 0.8, 0.02, 200)
+func = logistic_map
+
+plot_cobweb(func, 0.0, 0.9)
+plot_cobweb(func, 0.1, 0.9)
+plot_cobweb(func, 0.2, 0.9)
+plot_cobweb(func, 0.3, 0.9)
+plot_cobweb(func, 0.4, 0.9)
+plot_cobweb(func, 0.5, 0.9)
+plot_cobweb(func, 0.6, 0.9)
+plot_cobweb(func, 0.7, 0.9)
+plot_cobweb(func, 0.8, 0.9)
+plot_cobweb(func, 0.9, 0.9)
+plot_cobweb(func, 1.0, 0.9)

@@ -1,0 +1,75 @@
+graph squarinette  [[main]]
+{
+    input breath.pressure breathPressure [[min: -1, max: 1, init: 0]];
+    input breath.noise noise [[min: 0, max: 1, init: 0.02]];
+
+    input delay_length.eventIn delayLength [[min: 1.0/7000.0, max: 1.0/20.0, init: 1/440.0]];
+    input pole.eventIn filterPole [[min: -1.0, max: 1.0, init: 0.9]];
+
+    input reed_stiffness.eventIn reedStiffness [[min: -3.0, max: 3.0, init: 0.3]];
+    input reed_opening.eventIn reedOpening [[min: -1.0, max: 1.0, init: 0.7]];
+    input tone_hole_delay_length.eventIn toneHoleLength [[min: 0.0, max: 1.0]];
+    input tone_hole_gain_coeff.eventIn toneHoleGain [[min: -1.0, max: 1.0, init: 0.0]];
+
+    output stream float audioOut;
+
+    let
+    {
+        breath = NoisyBreath;
+        reed = CaneReedExcitation;
+        bore = DelayL(50000);
+        delay_length = EvExpSmooth;
+        losses = DynamicOnePole;
+        pole = EvExpSmooth;
+
+        reed_stiffness = EvExpSmooth;
+        reed_opening = EvExpSmooth;
+        tone_hole_delay = DelayL(50000);
+        tone_hole_delay_length = EvExpSmooth;
+        tone_hole_delay_mul = soul::gain::DynamicGain(float);
+        tone_hole_gain_coeff = EvExpSmooth;
+        tone_hole_gain = soul::gain::DynamicGain(float);
+    }
+
+    connection
+    {
+        breath -> reed.h;
+        reed_stiffness -> reed.m;
+        reed_opening -> reed.b;
+
+        reed -> bore.audioIn;
+        delay_length -> bore.delay, tone_hole_delay_mul.in;
+        bore -> losses.audioIn;
+        pole -> losses.pole;
+
+        losses -> [1] -> tone_hole_delay.audioIn;
+        tone_hole_delay_length -> tone_hole_delay_mul.gain;
+        tone_hole_delay_mul -> tone_hole_delay.delay;
+        tone_hole_delay -> tone_hole_gain.in;
+        tone_hole_gain_coeff -> tone_hole_gain.gain;
+        tone_hole_gain -> reed.r;
+        losses -> [1] -> reed.r;
+
+        losses -> audioOut;
+    }
+}
+
+processor CaneReedExcitation
+{
+    input stream float h; // breath
+    input stream float r; // reflection
+
+    input stream float m; // reed stiffness
+    input stream float b; // reed opening
+
+    output stream float out;
+
+    void run()
+    {
+        loop
+        {
+            out << clamp(m * (r + h) + b, -1.0f, 1.0f);
+            advance();
+        }
+    }
+}

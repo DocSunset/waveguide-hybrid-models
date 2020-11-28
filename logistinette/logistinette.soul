@@ -62,7 +62,7 @@ processor LogisticMapExcitation
         loop
         {
             let xc = clamp(x + 0.000001f, 0.0f, 1.0f);
-            out << (3 + r) * xc * (1.0f - xc);
+            out << (2.7f + 1.3f*r) * xc * (1.0f - xc);
             advance();
         }
     }

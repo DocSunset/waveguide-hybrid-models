@@ -277,4 +277,5 @@ clipping edge parameter is increased.
 
 All of these clarinet inspired models (including the original STK clarinet, I
 think) have some noticeable aliasing, particularly if the loss filter pole is
-turned down toward zero. 
+turned down toward zero.  Not sure what to do about that other than oversample
+everything, but for the purposes of the assignment I will be ignore this issue.

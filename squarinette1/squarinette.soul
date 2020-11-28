@@ -1,13 +1,11 @@
 graph squarinette  [[main]]
 {
-    input breath.pressure breathPressure [[min: -1, max: 1, init: 0]];
+    input breath.pressure breathPressure [[min: 0, max: 1, init: 0]];
     input breath.noise noise [[min: 0, max: 1, init: 0.02]];
-
+    input reed_stiffness.eventIn slope [[min: 0.0, max: 3.0, init: 0.0]];
     input delay_length.eventIn delayLength [[min: 1.0/7000.0, max: 1.0/20.0, init: 1/440.0]];
     input pole.eventIn filterPole [[min: -1.0, max: 1.0, init: 0.9]];
-
-    input reed_stiffness.eventIn reedStiffness [[min: -3.0, max: 3.0, init: 0.3]];
-    input reed_opening.eventIn reedOpening [[min: -1.0, max: 1.0, init: 0.7]];
+    input reed_opening.eventIn offset [[min: -0.01, max: 0.01, init: 0.0001]];
     input tone_hole_delay_length.eventIn toneHoleLength [[min: 0.0, max: 1.0]];
     input tone_hole_gain_coeff.eventIn toneHoleGain [[min: -1.0, max: 1.0, init: 0.0]];
 
@@ -68,7 +66,7 @@ processor ClippedLineExcitation
     {
         loop
         {
-            out << clamp(m * (r + h) + b, -1.0f, 1.0f);
+            out << clamp(-m * (r + h) + b, -1.0f, 1.0f);
             advance();
         }
     }

@@ -23,14 +23,14 @@ def line_map(x, m):
 def saturation_map(x, n):
   m = 5
   mx = m * x
-  return -mx / ((1 + abs(mx)**(3.5*n))**(1/(3.5*n)))
+  return -mx / ((1 + abs(mx)**(2.5*(n+1)))**(1/(2.5*(n+1))))
 
 def logistic_map(x, r):
   xs = (x + 1) / 2.0
   y = (r+3)*xs*(1-xs)
   return y * 2 - 1.0
 
-f = logistic_map
+f = saturation_map
 r_min = 0.0
 r_max = 1.0
 x0 = 0.005

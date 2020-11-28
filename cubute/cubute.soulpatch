@@ -1,0 +1,23 @@
+
+{
+    "soulPatchV1":
+    {
+        "ID":               "com.traviswest.cubute",
+        "version":          "0.1",
+        "name":             "cubute",
+        "description":      "A flute like physical model using a cubic map for excitation",
+        "category":         "synth",
+        "manufacturer":     "Travis West",
+        "isInstrument":     true,
+
+        "source":           [ "cubute.soul" 
+                            , "../common/EvExpSmooth.soul"
+                            , "../common/NoisyBreath.soul"
+                            , "../common/DelayL.soul"
+                            , "../common/Clamp.soul"
+                            , "../common/DCBlocker.soul"
+                            , "../common/OnePole.soul"
+                            , "../common/Biquad.soul"
+                            ]
+    }
+}

@@ -1,0 +1,18 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Physical Model Hybrids</title>
+  <meta name="description" content="Combining unrelated physical models to create new and unusual sounds">
+  <meta name="author" content="Travis West">
+
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+  $(cmark-gfm index.md)
+</body>
+</html>

@@ -1,6 +1,7 @@
 # Physical Model Hybrids
 
 MUMT 618 taught by Prof. Gary Scavone
+
 Final Project by Travis West
 
 *Abstract:*
@@ -248,9 +249,64 @@ lead me to the line of inquiry presented in the next section.
 
 # Clarinet-like excitation
 
+In order to better understand why my attempts to hybridize particularly the
+excitation models of the various instruments incorporated into the Clarinute
+and the Saxobowy, it became clear that I would first need to better understand
+the operation of the original models.  The clarinet model is particularly
+simple, consisting of a non-linearity coupled to a filter.  This is a kind of
+dynamical system, and so I thought to consider the clarinet model using the
+mathematics of non-linear dynamics.  Although my knowledge of this subject
+remains limited, I was aware of key concepts such as fixed points, periodic
+orbits, chaos, and Lyapunov exponents, as well as graphical tools such as
+cobweb plots and bifurcation diagrams.
 
+Applyig these to the clarinet excitation (decoupled from the delay line and
+loss filtering) with the breath pressure treated as the bifurcation parameter,
+it was clearer how the model functions: the breath pressure, when raised past a
+certain point, causes the dynamics of the model to change (bifurcate) from a
+single fixed point (silence) to a period two orbit (sound).  Further increasing
+the breath pressure causes the amplitude of the orbit to increase (causing an
+increase in loudness), and then eventually (depending on the value of the reed
+stiffness and opening parameters) the model reaches the overblown regime and
+the periodic orbit is replaced by a fixed point.  When the non-linearity is
+coupled to a delay line, the period two orbit becomes a period `N` orbit where
+N is the length of the delay line.  The loss filter also doesn't seem to
+significantly perturb the dynamics, instead simply softening the square wave
+output by the non-linearity.
+
+TODO figure here
+
+Based on these observations, it seemed as though a much simpler model could be
+employed to model the clarinet reed.  Any dynamic system with a period two
+orbit should be sufficient.  I tested a few different models, present in the
+repo as the squarinette1 and squarinette2 instruments.  Both of these use
+clipping non-linearities with an adjustable slope parameter.  Increasing the
+slope past one causes the dynamics to bifurcate into a stable period two orbit.
+
+Noting the quadratic term in the clarinet non-linearity, I also thought to try
+using a logistic map as the excitation model coupled to a delay line and a
+filter.  This model (logistinette in the repo) is particularly interesting to
+interact with since it exhibits period doubling and chaotic behaviours that
+elicit new and unusual sounds.  This approach of coupling a chaotic map to a
+waveguide has been explored in the literature e.g. by [Berdahl et al.][chaos
+highway]
+
+Rodet and Vergez have published two papers ([1][rodet1] [2][rodet2]) providing a
+more complete consideration of the non-linear dynamics of physical models.
+This line of inquiry seems likely to offer a clearer path toward successful
+hybrid excitation models.  Unfortunately, due to time limitations, a thorough
+exploration of this path remains as future work.
 
 # Conclusion
+
+Combining unrelated physical models to create hybrid instruments offers the
+possibility to evoke new and unusual sounds.  Although I was not able to
+achieve this goal in the course of this project, my studies have deeply
+enriched my understanding and appreciation for the subtleties of physical
+modelling synthesis.  Furthermore, promising future work remains.  By better
+understanding the non-linear dynamical behavior of physical modelling synthesis
+algorithms, I believe the exciting opportunities suggested by hybrid physical
+models remain attainable.
 
 # Works cited
 
@@ -263,7 +319,9 @@ lead me to the line of inquiry presented in the next section.
 [soul announcement]: https://youtu.be/-GhleKNaPdk?t=909
 [soul command line]: linkhere
 [juce]: linkhere
+[rodet1]: https://www.mitpressjournals.org/doi/10.1162/014892699559869
+[rodet2]: https://www.mitpressjournals.org/doi/abs/10.1162/014892699559878
 
 
 
-[chaos highway]: linkhere
+[chaos highway]: https://www.nime.org/proceedings/2018/nime2018_paper0087.pdf

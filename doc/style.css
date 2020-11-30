@@ -1,0 +1,11 @@
+body 
+{
+    font-family: Cantarell, sans-serif;
+    font-size: 1.2rem;
+    max-width: 40em;
+    margin: auto;
+    padding-top: 1rem;
+    padding-bottom: min(3em,5%);
+    padding-left: min(3em,5%);
+    padding-right: min(3em,5%);
+}

@@ -9,3 +9,19 @@ body
     padding-left: min(3em,5%);
     padding-right: min(3em,5%);
 }
+
+img
+{
+    display: block;
+    margin: auto;
+}
+
+/* for image caption */
+img + em {
+    font-style: normal;
+    display: inherit;
+    margin: auto;
+    text-align: center;
+    font-size: 90%;
+    max-width: 80%;
+}

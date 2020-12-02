@@ -17,6 +17,24 @@ such sounds, I also consider the excitation mechanisms of the cane reed model
 from a purely mathematical perspective.  I devise several alternative
 clarinet-like models from these considerations.
 
+*Playing the models:*
+
+All of the models in the repository are SOUL patches.  The simplest way to play
+with them is to install the [soul command line tool][soul command line] and
+use it to invoke the patch:
+
+```bash
+cd path_to_repo
+soul play name_of_patch
+```
+
+***WARNING***
+
+Some of the models contained in this repository are un-tested experimental
+hybrids, and may be unstable in certain configurations. Take precautions to
+ensure that your ears and listening equipment cannot be damaged in case a model
+should become unstable.
+
 # Introduction
 
 The design of most physical modelling synthesizers aims to produce sounds that
@@ -116,12 +134,13 @@ lowpass filter. The Blotar results from combining the flute and guitar
 excitation methods and allowing the loss filter to crossfade between the
 one-zero and one-pole filters.
 
-TODO: figure here
+![Block diagram of the Blotar.](blotar.svg)
+*Block diagram of the Blotar, annotated with the dual interpretation of its elements.*
 
 Implementing the flute, electric guitar, and Blotar was reasonably
 straightforward.  The flute model and the Blotar can be found in the
-repository; the electric guitar implementation is omitted in the interest of
-saving time and because it is only a very simple Karplus-Strong string model.
+repository; the electric guitar implementation is omitted due to its similarity
+and simplicity.
 
 ## The Whirlwind
 
@@ -195,10 +214,16 @@ second delay parallel to the bore for modelling tone-hole effects.  These delay
 lines provided immediate and satisfying behaviors combining characteristics of
 both original models.
 
+
 I was ultimately unable to successfully implement the brass model, for reasons
 that remain unclear to me, and despite very carefully studying the
 implementation in the STK as an example.  In the interest of time, I ultimately
-abandoned the brass model entirely, focusing instead on the Saxobowy.  The flute and clarinet implementations are available in the repository, as is the "clarinute" model that combines the two.
+abandoned the brass model entirely, focusing instead on the Saxobowy.  The
+flute and clarinet implementations are available in the repository, as is the
+"clarinute" model that combines the two.
+
+![Block diagram of the clarinute model](clarinute.svg)
+*Block diagram of the clarinute model.  Adding a biquad filter after the jet delay and before the output, and converting the one-pole loss filter to a biquad would change this into the Whirlwind.*
 
 ## The Saxobowy
 
@@ -260,7 +285,7 @@ remains limited, I was aware of key concepts such as fixed points, periodic
 orbits, chaos, and Lyapunov exponents, as well as graphical tools such as
 cobweb plots and bifurcation diagrams.
 
-Applyig these to the clarinet excitation (decoupled from the delay line and
+Applying these to the clarinet excitation (decoupled from the delay line and
 loss filtering) with the breath pressure treated as the bifurcation parameter,
 it was clearer how the model functions: the breath pressure, when raised past a
 certain point, causes the dynamics of the model to change (bifurcate) from a
@@ -274,7 +299,8 @@ N is the length of the delay line.  The loss filter also doesn't seem to
 significantly perturb the dynamics, instead simply softening the square wave
 output by the non-linearity.
 
-TODO figure here
+![Cobweb diagram of the STK clarinet non-linearity](clarinet_cobweb.gif)
+*A cobweb diagram of the STK clarinet non-linearity animated with breath pressure increasing over time.  Notice the moment of bifurcation when the amplitude of the dynamics suddenly increases forming a period two orbit.*
 
 Based on these observations, it seemed as though a much simpler model could be
 employed to model the clarinet reed.  Any dynamic system with a period two
@@ -282,6 +308,9 @@ orbit should be sufficient.  I tested a few different models, present in the
 repo as the squarinette1 and squarinette2 instruments.  Both of these use
 clipping non-linearities with an adjustable slope parameter.  Increasing the
 slope past one causes the dynamics to bifurcate into a stable period two orbit.
+
+![Cobweb diagram of the squarinette1 non-linearity](squarinette1_cobweb.gif)
+*A cobweb diagram of the squarinette1 non-linearity animated with slope increasing over time.  In this model the bifurcation happens very suddenly, and the orbit immediately reaches the maximum amplitude;  This translates to a poorer control of loudness in the model compared to the STK clarinet, although the spectrum is very similar.*
 
 Noting the quadratic term in the clarinet non-linearity, I also thought to try
 using a logistic map as the excitation model coupled to a delay line and a
@@ -291,7 +320,10 @@ elicit new and unusual sounds.  This approach of coupling a chaotic map to a
 waveguide has been explored in the literature e.g. by [Berdahl et al.][chaos
 highway]
 
-Rodet and Vergez have published two papers ([1][rodet1] [2][rodet2]) providing a
+![Cobweb diagram of the logistic map](logistic_cobweb.gif)
+*A cobweb diagram of the logistic map animated with the bifurcation parameter increasing from 3.0 to 4.0.  When coupled to a waveguide and lowpass filter, this results in an interesting synthesizer that produces a clarinet-like sound at low values of the bifurcation parameter.  As the parameter increases, interesting subharmonics and instabilities emerge, ultimately giving way to chaotic noise.*
+
+Rodet and Vergez have published two papers ([1][rodet1], [2][rodet2]) providing a
 more complete consideration of the non-linear dynamics of physical models.
 This line of inquiry seems likely to offer a clearer path toward successful
 hybrid excitation models.  Unfortunately, due to time limitations, a thorough
@@ -310,8 +342,18 @@ models remain attainable.
 
 # Works cited
 
-[whirlwind]: linkhere
-[blotar]: linkhere
+Perry Cook. 1992. [A Meta-Wind-Instrument Physical Model, and a Meta-Controller for Real-Time Performance Control][whirlwind]. *Proceedings of the International Computer Music Conference*. 
+
+Van Stiefel, Dan Trueman, and Perry Cook. 2004. [Re-coupling: the uBlotar synthesis instrument and the sHowl speaker-feedback controller][blotar]. *Proceedings of the International Computer Music Conference*. 
+
+Edgar Berdahl, Eric Sheffield, Andrew Pfalz, and Anthony T. Marasco. 2018. [Widening the Razor-Thin Edge of Chaos Into a Musical Highway: Connecting Chaotic Maps to Digital Waveguides][chaos highway]. *Proceedings of the International Conference on New Interfaces for Musical Expression*.
+
+Xavier Rodet and Christophe Vergez. 1999. [Nonlinear dynamics in physical models: Simple feedback-loop systems and properties][rodet1]. *Computer Music Journal*, 23(3), 18–34. 
+
+8avier Rodet and Christophe Vergez. 1999. [Nonlinear dynamics in physical models: From basic models to true musical-instrument models][rodet2]. *Computer Music Journal*, 23(3), 35–49.
+
+[whirlwind]: http://hdl.handle.net/2027/spo.bbp2372.1992.072
+[blotar]: http://hdl.handle.net/2027/spo.bbp2372.2004.084
 [soul]: linkhere
 [stk]: linkhere
 [saxofony]: linkhere
@@ -319,9 +361,6 @@ models remain attainable.
 [soul announcement]: https://youtu.be/-GhleKNaPdk?t=909
 [soul command line]: linkhere
 [juce]: linkhere
+[chaos highway]: https://www.nime.org/proceedings/2018/nime2018_paper0087.pdf
 [rodet1]: https://www.mitpressjournals.org/doi/10.1162/014892699559869
 [rodet2]: https://www.mitpressjournals.org/doi/abs/10.1162/014892699559878
-
-
-
-[chaos highway]: https://www.nime.org/proceedings/2018/nime2018_paper0087.pdf

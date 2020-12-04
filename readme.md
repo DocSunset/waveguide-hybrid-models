@@ -1,3 +1,7 @@
+See the project page
+[here](https://docsunset.github.io/waveguide-hybrid-models/) for more
+documentation.
+
 WARNING
 
 Some of the models contained in this repository are un-tested experimental

@@ -354,13 +354,13 @@ Xavier Rodet and Christophe Vergez. 1999. [Nonlinear dynamics in physical models
 
 [whirlwind]: http://hdl.handle.net/2027/spo.bbp2372.1992.072
 [blotar]: http://hdl.handle.net/2027/spo.bbp2372.2004.084
-[soul]: linkhere
-[stk]: linkhere
-[saxofony]: linkhere
-[bowed]: linkhere
+[soul]: https://soul.dev
+[stk]: https://github.com/thestk/stk
+[saxofony]: https://github.com/thestk/stk/blob/master/include/Saxofony.h
+[bowed]: https://github.com/thestk/stk/blob/master/include/Bowed.h
 [soul announcement]: https://youtu.be/-GhleKNaPdk?t=909
-[soul command line]: linkhere
-[juce]: linkhere
+[soul command line]: https://github.com/soul-lang/SOUL/releases
+[juce]: https://juce.com/
 [chaos highway]: https://www.nime.org/proceedings/2018/nime2018_paper0087.pdf
 [rodet1]: https://www.mitpressjournals.org/doi/10.1162/014892699559869
 [rodet2]: https://www.mitpressjournals.org/doi/abs/10.1162/014892699559878
